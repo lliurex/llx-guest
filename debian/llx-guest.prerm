@@ -1,23 +1,24 @@
-#!/bin/bash
-
+#!/bin/sh
 set -e
 
+# Template for diversions
+ORIG_FILE="/usr/share/sddm/scripts/Xsetup"
+OUR_FILE="/usr/share/sddm/scripts/Xsetup.lliurex"
+OUR_PACKAGE="llx-guest"
 
-if [ "$1" = "remove" ] ; then
-	
-	PKG="llx-guest"
-	ORIGINAL_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup"
-	NEW_DIVERTED_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup.diverted"
-	
+case $1 in 
+        remove|purge|abort-install|disappear)
+                if [ -f ${ORIG_FILE}.real ] ; then
+                        rm -f ${ORIG_FILE}
+                        dpkg-divert --package  ${OUR_PACKAGE} --rename --quiet --remove ${ORIG_FILE}|| true
+                fi
+                
+                ;;
+        *)
+                echo "Nothing to do"
+                ;; 
+esac
 
-	if [ -f "$NEW_DIVERTED_FILE_BROWSED" ]; then
-		rm -rf "$ORIGINAL_FILE_BROWSED" || true
-		dpkg-divert --remove --package ${PKG} --rename --divert "$NEW_DIVERTED_FILE_BROWSED" "$ORIGINAL_FILE_BROWSED"
+# Other Stuff #
 
-	fi
-
-
-fi
 #DEBHELPER#
-
-exit 0

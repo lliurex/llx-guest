@@ -2,42 +2,31 @@
 
 set -e
 
-case "$1" in
-   configure)
-        PKG="llx-guest"
-	ORIGINAL_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup"
-	NEW_DIVERTED_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup.diverted"
+# Template for diversions
+ORIG_FILE="/usr/share/sddm/scripts/Xsetup"
+OUR_FILE="/usr/share/sddm/scripts/Xsetup.lliurex"
+OUR_PACKAGE="llx-guest"
 
-	
-	#if [ ! -L "$ORIGINAL_FILE_CUPS" ]; then
+case $1 in 
 
-	#	dpkg-divert --add --package ${PKG} --rename --divert "$NEW_DIVERTED_FILE_CUPS" "$ORIGINAL_FILE_CUPS"
-	#	ln -s "$LLIUREX_FILE_CUPS" "$ORIGINAL_FILE_CUPS"
-
-	#fi
-	
-		
-	if [ ! -L "$ORIGINAL_FILE_BROWSED" ]; then
-
-		dpkg-divert --add --package ${PKG} --rename --divert "$NEW_DIVERTED_FILE_BROWSED" "$ORIGINAL_FILE_BROWSED"
-		cp "$LLIUREX_FILE_BROWSED" "$ORIGINAL_FILE_BROWSED"
-
-	fi
-	
-	#systemctl restart cups-browsed || true
-
-
-	;;
-   abort-upgrade|abort-remove|abort-deconfigure)
-	;;
-
-
-  *)
-    echo "postinst called with unknown argument \`$1'" >&2
-    exit 1
-  ;;
+        configure)
+                if dpkg-divert --package ${OUR_PACKAGE} --add  --rename  --divert ${ORIG_FILE}.real ${ORIG_FILE} ; then
+                        ln -fs ${OUR_FILE} ${ORIG_FILE}
+                else
+                        echo "Unabe to divert file ${ORIG_FILE}"
+                fi 
+                
+				systemctl daemon-reload
+				invoke-rc.d mysql restart || true
+                ;;
+	   abort-upgrade|abort-remove|abort-deconfigure)
+			   ;;
+        *)
+                echo "Nothing to do"
+                ;; 
 esac
 
 #DEBHELPER#
 
 exit 0
+
