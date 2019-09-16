@@ -1,0 +1,13 @@
+Source: llx-guest
+Section: admin
+Priority: optional
+Maintainer: Equipo LliureX <lliurex@gva.es>
+Uploaders:Raul Rodrigo Segura <lliurex_devel3@edu.gva.es>,  David Montalva Furio <montalva_dav@gva.es>, Hector Garcia Huerta <lliurex_devel1@edu.gva.es>, Daniel Duran Vecino <daduve@gmail.com>, M.Angel Juan <m.angel.juan@gmail.com>
+Build-Depends:debhelper (>= 9)
+Standards-Version: 3.9.5
+
+Package: llx-guest
+Architecture: all
+Depends: ${misc:Depends}
+Description: LliureX Guest
+ Create guest user without passwd in KDE
