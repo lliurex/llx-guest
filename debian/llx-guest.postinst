@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+   configure)
+        PKG="lliurex-cups-client"
+	ORIGINAL_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup"
+	NEW_DIVERTED_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup.diverted"
+
+	
+	#if [ ! -L "$ORIGINAL_FILE_CUPS" ]; then
+
+	#	dpkg-divert --add --package ${PKG} --rename --divert "$NEW_DIVERTED_FILE_CUPS" "$ORIGINAL_FILE_CUPS"
+	#	ln -s "$LLIUREX_FILE_CUPS" "$ORIGINAL_FILE_CUPS"
+
+	#fi
+	
+		
+	if [ ! -L "$ORIGINAL_FILE_BROWSED" ]; then
+
+		dpkg-divert --add --package ${PKG} --rename --divert "$NEW_DIVERTED_FILE_BROWSED" "$ORIGINAL_FILE_BROWSED"
+		cp "$LLIUREX_FILE_BROWSED" "$ORIGINAL_FILE_BROWSED"
+
+	fi
+	
+	systemctl restart cups || true
+	#systemctl restart cups-browsed || true
+
+
+	;;
+   abort-upgrade|abort-remove|abort-deconfigure)
+	;;
+
+
+  *)
+    echo "postinst called with unknown argument \`$1'" >&2
+    exit 1
+  ;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e
+
+
+if [ "$1" = "remove" ] ; then
+	
+	PKG="llx-guest"
+	ORIGINAL_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup"
+	NEW_DIVERTED_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup.diverted"
+	
+
+
+	#if [ -L "$ORIGINAL_FILE_CUPS" ]; then
+	#	rm -rf "$ORIGINAL_FILE_CUPS" || true
+	#	dpkg-divert --remove --package ${PKG} --rename --divert "$NEW_DIVERTED_FILE_CUPS" "$ORIGINAL_FILE_CUPS"
+
+	#fi
+	
+	
+	if [ -f "$NEW_DIVERTED_FILE_BROWSED" ]; then
+		rm -rf "$ORIGINAL_FILE_BROWSED" || true
+		dpkg-divert --remove --package ${PKG} --rename --divert "$NEW_DIVERTED_FILE_BROWSED" "$ORIGINAL_FILE_BROWSED"
+
+	fi
+
+	#systemctl restart cups-browsed || true
+	systemctl restart cups || true
+
+
+fi
+#DEBHELPER#
+
+exit 0
