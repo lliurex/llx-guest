@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
    configure)
-        PKG="lliurex-cups-client"
+        PKG="llx-guest"
 	ORIGINAL_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup"
 	NEW_DIVERTED_FILE_BROWSED="/usr/share/sddm/scripts/Xsetup.diverted"
 
@@ -24,7 +24,6 @@ case "$1" in
 
 	fi
 	
-	systemctl restart cups || true
 	#systemctl restart cups-browsed || true
 
 
