@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-02 11:55+0200\n"
+"PO-Revision-Date: 2019-10-02 11:59+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ca_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../lliurex-perfilreset.install/usr/share/lliurex-perfilreset/rsrc/lliurex-perfilreset.ui:27
+msgid "Reset profile"
+msgstr "Restablir perfil"
+
+#: ../lliurex-perfilreset.install/usr/share/lliurex-perfilreset/LliurexPerfilreset.py:88
+msgid "Resetting profile..."
+msgstr "Restablint perfil..."
+
+#: ../lliurex-perfilreset.install/usr/share/lliurex-perfilreset/LliurexPerfilreset.py:156
+msgid "You must restart the session to end the process"
+msgstr "Ha de reiniciar la sessió per a completar el procés"
+
+#: ../lliurex-perfilreset.install/usr/share/lliurex-perfilreset/LliurexPerfilreset.py:215
+#, python-format
+msgid ""
+"%s open terminals have been detected.\n"
+"In order for the terminal configuration to be restored they must be\n"
+"closed before starting the process"
+msgstr ""
+"S'ha detectat %s terminal(s) obertes.\n"
+"Perquè també es restaure la configuració de la terminal han de ser\n"
+"tancades abans d'iniciar el procés"
+
+#~ msgid "Resetear Perfil Gráfico"
+#~ msgstr "Reinicialitza l'escriptori per a deixar-lo en el format de LliureX per defecte."
+
+#~ msgid "Close"
+#~ msgstr "Ix"
