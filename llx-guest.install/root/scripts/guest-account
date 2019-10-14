@@ -1,0 +1,178 @@
+#!/bin/bash
+# (C) 2008 Canonical Ltd.
+# Author: Martin Pitt <martin.pitt@ubuntu.com>
+# License: GPL v2 or later
+# modified by David D Lowe and Thomas Detoux
+#
+# Setup user and temporary home directory for invitado session.
+# If this succeeds, this script needs to print the username as the last line to
+# stdout.
+echo_log (){
+	LOG='/tmp/entrando_sddm.txt'
+	echo $1
+	echo $1>>$LOG
+}
+
+
+add_account ()
+{
+  LOG='/tmp/entrando_sddm.txt'
+  touch $LOG
+  echo "" >> $LOG
+  echo "------------------------------" >> $LOG
+  date >> $LOG
+  echo "------------------------------" >> $LOG
+  mkdir /tmp/invitado || echo "It exists">>$LOG
+  chmod 777 /tmp/invitado
+  HOME="/tmp/invitado"
+  USER=`echo $HOME | sed 's/\(.*\)invitado/invitado/'`
+
+  echo_log "if $USER already exists, it must be a locked system account with no existing"
+  # home directory
+  if PWSTAT=`passwd -S "$USER"` 2>/dev/null; then
+	  echo_log "Inside first if..... testing........"
+    if [ "`echo \"$PWSTAT\" | cut -f2 -d\ `" != "L" ]; then
+      echo_log "Exception: User account $USER already exists and is not locked.....PWSTAT=$PWSTAT"
+      exit 1
+    fi
+    PWENT=`getent passwd "$USER"` || {
+      echo_log "Exception: getent passwd $USER failed"
+      exit 1
+    }
+    invitado_UID=`echo "$PWENT" | cut -f3 -d:`
+    if [ "$invitado_UID" -ge 500 ]; then
+      echo_log "Exception: Account $USER is not a system user"
+      exit 1
+    fi
+    HOME=`echo "$PWENT" | cut -f6 -d:`
+    if [ "$HOME" != / ] && [ "${HOME#/tmp}" = "$HOME" ] && [ -d "$HOME" ]; then
+      echo_log "Exception: Home directory of $USER already exists"
+      exit 1
+    fi
+    echo_log "Fin dentro del if"
+  else
+    echo_log "invitado user does not exist, so create it"
+
+    # Arch Linux modification: Ubuntu/Debian uses their own adduser package,
+    # which works differently from the own provided by the shadow package.
+    # Instead, use useradd, which works in any distro.
+    #
+    # Only the syntax is changed
+    # adduser          -> useradd
+    # --system         -> --system
+    # --no-create-home -> --no-create-home
+    # --home           -> --home-dir
+    # --gecos          -> --comment
+    # --group          -> --user-group
+    # --shell          -> --shell
+    #
+    #adduser --system --no-create-home --home / --gecos "invitado" --group --shell /bin/bash $USER || {
+	    OWN_PROCESS=$(whoami)
+    	echo_log "User to execute process: $OWN_PROCESS"
+	echo_log "useradd --system --no-create-home --home-dir / --comment \"invitado\" --user-group --shell /bin/bash $USER"
+	/usr/sbin/adduser --system --no-create-home --home / --gecos "invitado" --group --shell /bin/bash $USER 1>> $LOG 2>&1 || {
+    	echo_log "USER:$USER useradd fail....... umount and rm $HOME"
+        umount "$HOME" || true
+        rm -rf "$HOME" || true
+	echo_log "Broken script.... exception in useradd $USER"
+        exit 1
+    }
+    echo invitado:U6aMy0wojraho | sudo chpasswd -e 
+  fi
+  echo_log "Continue script....... $USER is OK in the system"
+  # create temporary home directory
+  /bin/mount -t tmpfs -o mode=700 none "$HOME" || { rm -rf "$HOME"; exit 1; }
+  /bin/chown $USER:$USER "$HOME"
+  gs_skel=/etc/invitado-session/skel/
+  echo_log "Creando gs_skel=$gs_skel"
+  if [ -d "$gs_skel" ] && [ -n "`find $gs_skel -type f`" ]; then
+    /bin/cp -rT $gs_skel "$HOME"
+    echo_log "cp -rT $gs_skel $HOME"
+  else
+    /bin/cp -rT /etc/skel/ "$HOME"
+    echo_log "cp -rT /etc/skel/ $HOME"
+  fi
+  /bin/chown -R $USER:$USER "$HOME"
+  /usr/sbin/usermod -d "$HOME" "$USER"
+
+  # Load restricted session
+  #dmrc='[Desktop]\nSession=invitado-restricted'
+  #/bin/echo -e "$dmrc" > "$HOME"/.dmrc
+  echo_log "chown -R $USER:$USER $HOME"
+  /bin/chown -R $USER:$USER "$HOME"
+
+  echo $USER  
+  echo_log "Script terminado para $USER"
+}
+
+remove_account ()
+{
+  USER=$1
+  echo_log " "
+  echo_log "- - - - - - - - - - - - - - - - "
+  echo_log "Exit script executing...."
+  date >> /tmp/entrando_sddm.txt
+  echo_log "- - - - - - - - - - -  - - - - -"
+  
+  PWENT=`/usr/bin/getent passwd "$USER"` || {
+    echo_log "Exception Error: user $USER is not in system"
+    exit 1
+  }
+  USERUID=`echo "$PWENT" | cut -f3 -d:`
+  HOME=`echo "$PWENT" | cut -f6 -d:`
+
+  # deluser is provided by the adduser package on Debian/Ubuntu. useradd
+  # doesn't have a '--system' parameter, which causes deluser to only delete
+  # system users, so this will be handled using this script.
+  SYS_UID_MIN="$(cat /etc/login.defs | grep SYS_UID_MIN | awk '{print $2}')"
+  SYS_UID_MAX="$(cat /etc/login.defs | grep SYS_UID_MAX | awk '{print $2}')"
+  if [ "$USERUID" -lt "$SYS_UID_MIN" ] || [ "$USERUID" -gt "$SYS_UID_MAX" ]; then
+    echo_log "Exception Error: user $USER is not a system user."
+    exit 1
+  fi
+
+  if [ "${HOME}" = "${HOME#/tmp/}" ]; then
+    echo_log "Exception Error: home directory $HOME is not in /tmp/."
+    echo_log "Exception:kill all remaining processes for user: $USER"
+      while /bin/ps h -u "$USER" >/dev/null; do
+          /usr/bin/killall -9 -u "$USER" || true
+          /bin/sleep 0.2;
+      done
+
+    echo_log "Exception: Deleting user :$USER and abort process........."
+    /usr/sbin/userdel "$USER" 1>&2 2>>/tmp/entrando_sddm.txt || echo_log "Exception: Error in userdel"
+    exit 1
+  fi
+
+  echo_log "kill all remaining processes for user: $USER"
+  while /bin/ps h -u "$USER" >/dev/null; do 
+    /usr/bin/killall -9 -u "$USER" || true
+    /bin/sleep 0.2; 
+  done
+  echo_log "umount $HOME"
+  /bin/umount "$HOME" || /bin/umount -l "$HOME" || true
+  rm -rf "$HOME"
+
+  echo_log "remove leftovers in /tmp"
+  /usr/bin/find /tmp -mindepth 1 -maxdepth 1 -uid "$USERUID" -print0 | xargs -0 rm -rf || true
+
+  #deluser --system "$USER"
+  echo_log "Deleting user $USER......."
+  /usr/sbin/userdel "$USER" 1>&2 2>>/tmp/entrando_sddm.txt || echo_log "Error userdel function"
+}
+
+case "$1" in
+  add)
+    add_account
+    ;;
+  remove)
+    if [ -z $2 ] ; then
+      echo "Usage: $0 remove [account]"
+      exit 1
+    fi
+    remove_account $2
+    ;;
+  *)
+    echo "Usage: $0 add|remove"
+    exit 1
+esac
