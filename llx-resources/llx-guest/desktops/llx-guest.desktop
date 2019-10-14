@@ -1,0 +1,19 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=LlX Guest 
+Name[es]=LlX Guest
+Name[ca_ES@valencia]=LlX Guest
+Name[ca]=LlX Guest
+Name[ca_ES.UTF-8@valencia]=LlX Guest
+TryExec=/usr/sbin/llx-guest-gui
+Comment=Add or remove guest user from system
+Comment[ca_ES@valencia]=Add or remove guest user from system
+Comment[ca_ES.UTF-8@valencia]=Add or remove guest user from system
+Comment[ca]=Add or remove guest user from system
+Comment[es]=Activa o desactiva el usuario invitado del systema.
+StartupNotify=true
+Exec=/usr/bin/llx-guest-gui
+Icon=llx-guest
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;LliureX-Administration;

@@ -1,0 +1,12 @@
+Name=llx-guest
+Name[en]=LlX Guest
+Name[es]=LlX Guest
+Name[qcv]=LlX Guest
+Comment=Add or delete guest user to the system
+Comment[es]=Activa o desactiva el usuario invitado en el systema
+Comment[qcv]=Activa o desactiva el usuario invitado en el systema
+Icon=llx-guest
+Groups=admins;sudo;
+Category=Configuration
+ScriptPath=llx-guest.zmd
+
