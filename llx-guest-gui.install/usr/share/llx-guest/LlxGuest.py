@@ -183,14 +183,15 @@ class LlxGuest:
 				self.state="on"
 			else:
 				self.state="error"
-				self.switch_guest.set_active(False)
+				self.switch_guest_error_state=False
 		else:
 			self.state = "off"
 			if GuestUser.delete_guest_user()[0]:
 				self.state="off"
 			else:
 				self.state="error"
-				self.switch_guest.set_active(True)
+				self.switch_guest_error_state=True
+				
 
 
 		#self.printd("Switch was turned %s"%self.state)
@@ -209,6 +210,7 @@ class LlxGuest:
 		#self.reveal.set_reveal_child(False)
 		self.switch_guest.set_sensitive(True)
 		self.lock_quit=False
+		self.switch_guest.set_active(switch_guest_error_state)
 		if self.state=="error":
 			self.msg_label.set_name("MSG_LABEL")
 			self.msg_label.set_text(_("LlX-Guest user has been a problem to modify user files\nPlease contact with the administrator system."))
