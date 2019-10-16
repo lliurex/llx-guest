@@ -129,15 +129,25 @@ class LlxGuest:
 
 
 	def switch_initial_state(self):
-
-		self.state="off"
-		self.switch_guest.set_active(False)
-		with open("/etc/passwd") as infile:
-			for line in infile:
-				line = line.rstrip('\n')
-				if "invitado" in line:
-					self.state="on"
-					self.switch_guest.set_active(True)
+		try:
+			self.switch_guest_error_state=False
+			self.state=False
+			self.switch_guest.set_state(False)
+			with open("/etc/passwd") as infile:
+				for line in infile:
+					line = line.rstrip('\n')
+					if "invitado" in line:
+						self.state=True
+						self.switch_guest.set_state(True)
+			
+			self.switch_guest_error_state=False
+		
+		except Exception as e:
+			self.switch_guest.set_sensitive(False)
+			self.msg_label.set_text(_("You don't have admin permissions to change files\n Please contact with the administrator"))
+			self.printd("You don't have admin permissions to change files\n Please contact with the administrator")
+			self.printd ("%s"%e)
+			return [False,str(e)]
 
 	# def_switch_initial_state
 
@@ -156,7 +166,9 @@ class LlxGuest:
 	#def check_changes
 
 	def switch_guest_modify(self,widget,gparam):
-
+		if self.switch_guest_error_state:
+			return True
+			
 		self.switch_guest.set_sensitive(False)
 		self.main_window.connect
 		self.lock_quit=True
@@ -177,19 +189,20 @@ class LlxGuest:
 	# ##################### ##########################################
 	
 	def th_add_guest_user(self,*args):
-
+		self.switch_guest_error_state=False
 		if self.switch_guest.get_active():
+			self.printd("Adding guest user...")
 			if GuestUser.add_guest_user()[0]:
-				self.state="on"
+				self.state=True
 			else:
-				self.state="error"
-				self.switch_guest_error_state=False
+				self.state=False
+				self.switch_guest_error_state=True
 		else:
-			self.state = "off"
+			self.printd("Deleting guest user...")
 			if GuestUser.delete_guest_user()[0]:
-				self.state="off"
+				self.state=False
 			else:
-				self.state="error"
+				self.state=True
 				self.switch_guest_error_state=True
 				
 
@@ -208,20 +221,23 @@ class LlxGuest:
 
 		#spinner.stop()
 		#self.reveal.set_reveal_child(False)
-		self.switch_guest.set_sensitive(True)
+		
 		self.lock_quit=False
-		self.switch_guest.set_active(self.switch_guest_error_state)
-		if self.state=="error":
+		if self.switch_guest_error_state:
 			self.msg_label.set_name("MSG_LABEL")
 			self.msg_label.set_text(_("LlX-Guest user has been a problem to modify user files\nPlease contact with the administrator system."))
 			self.printd("LlX-Guest user has been a problem to modify user files\nPlease contact with the administrator system.")
+			self.switch_guest.set_state(self.state)
 		else:
-			if self.state=="on":
+			self.switch_guest.set_sensitive(True)
+			if self.state:
 				self.msg_label.set_name("MSG_LABEL")
 				self.msg_label.set_text(_("Guest user added\nYou must restart the session to try it."))
 			else:
 				self.msg_label.set_name("MSG_LABEL")
 				self.msg_label.set_text(_("Guest user deleted"))
+			
+			self.switch_guest_error_state=False
 		self.msg_label.show()
 
 		return False
