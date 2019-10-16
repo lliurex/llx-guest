@@ -130,22 +130,28 @@ class LlxGuest:
 
 	def switch_initial_state(self):
 		try:
-			self.switch_guest_error_state=False
-			self.state=False
-			self.switch_guest.set_state(False)
-			with open("/etc/passwd") as infile:
-				for line in infile:
-					line = line.rstrip('\n')
-					if "invitado" in line:
-						self.state=True
-						self.switch_guest.set_state(True)
-			
-			self.switch_guest_error_state=False
+			if GuestUser.check_permission()[0]:
+				self.switch_guest_error_state=False
+				self.state=False
+				self.switch_guest.set_state(False)
+				with open("/etc/passwd") as infile:
+					for line in infile:
+						line = line.rstrip('\n')
+						if "invitado" in line:
+							self.state=True
+							self.switch_guest.set_state(True)
+				
+				self.switch_guest_error_state=False
+			else:
+				self.switch_guest.set_sensitive(False)
+				self.msg_label.set_text(_("You don't have admin permissions to change files\n Please contact with the administrator"))
+				self.printd("You don't have admin permissions to change files. Please contact with the administrator")
+				return [False]
 		
 		except Exception as e:
 			self.switch_guest.set_sensitive(False)
 			self.msg_label.set_text(_("You don't have admin permissions to change files\n Please contact with the administrator"))
-			self.printd("You don't have admin permissions to change files\n Please contact with the administrator")
+			self.printd("You don't have admin permissions to change files. Please contact with the administrator")
 			self.printd ("%s"%e)
 			return [False,str(e)]
 
@@ -174,15 +180,9 @@ class LlxGuest:
 		self.lock_quit=True
 		self.msg_label.set_name("MSG_LABEL_DELETE")
 		self.msg_label.set_text(_("Please wait until the process is finished....."))
-		#spinner = Spinner()
-		#spinner.start()
-		#self.retcode=None
-		#self.reveal.set_reveal_child(True)
 		th=threading.Thread(target=self.th_add_guest_user)
 		GLib.timeout_add(1000,self.show_reveal,th)
 		th.start()
-		#self.retcode=1
-		#spinner.stop()
 
 	#def reset_clicked
 	
@@ -209,12 +209,12 @@ class LlxGuest:
 
 		#self.printd("Switch was turned %s"%self.state)
 
-		time.sleep(2)
+		time.sleep(1)
 
 	def show_reveal(self,*args):
 		th=args[-1]
 		if th.is_alive():
-			self.printd("working!!")
+			self.printd("working, please wait!!")
 			return True
 
 		self.printd("Thread FINISHED.")
@@ -226,16 +226,18 @@ class LlxGuest:
 		if self.switch_guest_error_state:
 			self.msg_label.set_name("MSG_LABEL")
 			self.msg_label.set_text(_("LlX-Guest user has been a problem to modify user files\nPlease contact with the administrator system."))
-			self.printd("LlX-Guest user has been a problem to modify user files\nPlease contact with the administrator system.")
+			self.printd("LlX-Guest user has been a problem to modify user files. Please contact with the administrator system.")
 			self.switch_guest.set_state(self.state)
 		else:
 			self.switch_guest.set_sensitive(True)
 			if self.state:
 				self.msg_label.set_name("MSG_LABEL")
 				self.msg_label.set_text(_("Guest user added\nYou must restart the session to try it."))
+				self.printd("Guest user added. You must restart the session to try it.")
 			else:
 				self.msg_label.set_name("MSG_LABEL")
 				self.msg_label.set_text(_("Guest user deleted"))
+				self.printd("Guest user deleted.")
 			
 			self.switch_guest_error_state=False
 		self.msg_label.show()

@@ -21,6 +21,25 @@ def printd (text):
 
 # def printd
 
+def check_permission():
+	
+	try:
+		with open(script_file, 'w') as f:
+			print #test
+			
+		return[True]
+			
+		
+			
+		return true
+		
+	except Exception as e:
+		print ("[GuestUser] %s"%e)
+		print ("[GuestUser] You don't have permission to modify files")
+		return [False,str(e)]
+	
+#def check_permission
+
 
 def add_guest_user ():
 	
@@ -60,6 +79,16 @@ def delete_guest_user ():
 		if os.path.isfile(script_file):
 			os.remove(script_file)
 			printd("File %s has been removed"%script_file)
+		
+		f=open(script_file,"w+")
+		f.write("#!/bin/sh\n")
+		f.write("# Xsetup - run as root before the login dialog appears\n")
+		f.write("if [ -e /sbin/prime-offload ]; then\n")
+		f.write("echo running NVIDIA Prime setup /sbin/prime-offload\n")
+		f.write("/sbin/prime-offload\n")
+		f.write("fi\n")
+		f.close()
+		os.chmod(script_file, 0o755)
 		state=subprocess.Popen("%s remove invitado"%root_script, shell=True, stdout=subprocess.PIPE).stdout.read()
 		printd("Remove user state: %s"%state)
 		return [True]
