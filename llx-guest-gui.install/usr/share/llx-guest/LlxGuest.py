@@ -183,12 +183,14 @@ class LlxGuest:
 				self.state="on"
 			else:
 				self.state="error"
+				self.switch_guest.set_active(False)
 		else:
 			self.state = "off"
 			if GuestUser.delete_guest_user()[0]:
 				self.state="off"
 			else:
 				self.state="error"
+				self.switch_guest.set_active(True)
 
 
 		#self.printd("Switch was turned %s"%self.state)
@@ -209,8 +211,8 @@ class LlxGuest:
 		self.lock_quit=False
 		if self.state=="error":
 			self.msg_label.set_name("MSG_LABEL")
-			self.msg_label.set_text(_("LlX-Guest user has been a problem\nPlease contact with the administrator system."))
-			self.printd("LlX-Guest user has been a problem\nPlease contact with the administrator system.")
+			self.msg_label.set_text(_("LlX-Guest user has been a problem to modify user files\nPlease contact with the administrator system."))
+			self.printd("LlX-Guest user has been a problem to modify user files\nPlease contact with the administrator system.")
 		else:
 			if self.state=="on":
 				self.msg_label.set_name("MSG_LABEL")
