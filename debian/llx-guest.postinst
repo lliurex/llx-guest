@@ -15,9 +15,6 @@ case $1 in
                 else
                         echo "Unabe to divert file ${ORIG_FILE}"
                 fi 
-                
-				systemctl daemon-reload
-				invoke-rc.d mysql restart || true
                 ;;
 	   abort-upgrade|abort-remove|abort-deconfigure)
 			   ;;
