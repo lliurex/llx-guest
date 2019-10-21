@@ -8,6 +8,14 @@ Standards-Version: 3.9.5
 
 Package: llx-guest
 Architecture: all
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, n4d-guestmanager, python3, lliurex-desktop-sddm-theme (>=1.10.0.0)
 Description: LliureX Guest
- Create guest user without passwd in KDE
+ Manage guest user account
+
+
+Package: n4d-guestmanager
+Architecture: all
+Depends: ${misc:Depends}, n4d-guestmanager, python, n4d
+Description: N4d Guest Manager plugin
+ Plugin to manage guest-user account
+
