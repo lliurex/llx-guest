@@ -1,3 +1,10 @@
+llx-guest (0.1) bionic; urgency=medium
+
+  * new n4d-guestmanager package
+  * new logit for guest-user creation
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 21 Oct 2019 13:54:58 +0200
+
 llx-guest (0.0.1) bionic; urgency=high
 
   * Initial release
