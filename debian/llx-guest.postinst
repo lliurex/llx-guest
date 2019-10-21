@@ -10,11 +10,6 @@ OUR_PACKAGE="llx-guest"
 case $1 in 
 
         configure)
-                if dpkg-divert --package ${OUR_PACKAGE} --add  --rename  --divert ${ORIG_FILE}.real ${ORIG_FILE} ; then
-                        ln -fs ${OUR_FILE} ${ORIG_FILE}
-                else
-                        echo "Unabe to divert file ${ORIG_FILE}"
-                fi 
                 ;;
 	   abort-upgrade|abort-remove|abort-deconfigure)
 			   ;;
