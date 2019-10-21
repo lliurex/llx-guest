@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+
+import xmlrpc.client
+import ssl
+import sys
+
+ACTIONS_LIST=["enable","disable","status","help","-h","--help"]
+
+class Guest:
+	
+	def __init__(self,action):
+
+		self.actions={}
+		self.actions["enable"]=self.enable_guest_user
+		self.actions["disable"]=self.disable_guest_user
+		self.actions["status"]=self.get_guest_status
+		
+		server="localhost"
+
+		if action not in ["enable","disable","status"]:
+			sys.exit(1)
+			
+		context=ssl._create_unverified_context()	
+		self.n4d_client=xmlrpc.client.ServerProxy("https://%s:9779"%server,allow_none=True,context=context)
+		
+		try:
+			self.actions[action]()
+		except Exception as e:
+			self.dprint(e)
+			sys.exit(1)
+		
+	#def __init__
+	
+	
+	def get_n4d_key(self):
+	
+		try:
+			f=open("/etc/n4d/key")
+			key=f.readline().strip()
+			f.close()
+			return key
+		except Exception as e:
+			self.dprint("Failed to read n4d key. [ %s ]"%e)
+			sys.exit(1)
+		
+	#def get_n4d_key
+	
+	
+	def dprint(self,msg):
+		
+		print("[llx-guest-manager] %s"%msg)
+		
+	#def dprint
+	
+	
+	def enable_guest_user(self):
+		
+		#self.dprint("Enabling guest user...")
+		key=self.get_n4d_key()
+		ret=self.n4d_client.enable_guest_user(key,"GuestAccountManager")
+		if ret["status"]:
+			self.dprint("guest user enabled")
+			sys.exit(0)
+		else:
+			self.dprint("Failed to enable guest user. [ %s ]"%ret["msg"])
+			sys.exit(1)
+		
+	#def enable_guest_user
+	
+	
+	def disable_guest_user(self):
+		
+		#self.dprint("Disabling guest user...")
+		key=self.get_n4d_key()
+		ret=self.n4d_client.disable_guest_user(key,"GuestAccountManager")
+		if ret["status"]:
+			self.dprint("guest user disabled")
+			sys.exit(0)
+		else:
+			self.dprint("Failed to disable guest user. [ %s ]"%ret["msg"])
+			sys.exit(1)		
+		
+	#def disable_guest_user
+	
+	
+	def get_guest_status(self):
+		
+		self.dprint("Getting guest user status...")
+		ret=self.n4d_client.get_guest_status("","GuestAccountManager")
+		if ret["status"]==True:
+			self.dprint("guest-user is enabled")
+			sys.exit(0)
+		else:
+			self.dprint("guest-user is disabled")
+			sys.exit(1)
+		
+	#def get_guest_status
+		
+#class Guest
+
+
+
+
+def print_usage():
+	print("Usage: llx-guest-manager OPTION")
+	print("")
+	print("Options:")
+	print("\tenable\t\t\tenables guest user account")
+	print("\tdisable\t\t\tdisables guest user account")
+	print("\tstatus\t\t\tchecks if guest user account is created")
+	print("\thelp\t\t\tprints this message")
+	print("\t-h\t\t\tprints this message")
+	print("\t--help\t\t\tprints this message")
+	
+
+def parse_args(arg_list):
+	
+	if len(arg_list)<2:
+		print("[!] llx-guest-manager needs an argument [!]")
+		print_usage()
+		sys.exit(1)
+	
+	action=arg_list[1]
+	
+	if action not in ACTIONS_LIST:
+		print("Unknown argument")
+		print_usage()
+		sys.exit(1)
+	
+	if action in ["-h","--help","help"]:
+		print_usage()
+		sys.exit(0)
+	
+	return action
+	
+#def parse_args
+
+if __name__=="__main__":
+	
+	
+	action=parse_args(sys.argv)
+	guest=Guest(action)
+	
+	sys.exit(0)
