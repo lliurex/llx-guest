@@ -1,0 +1,79 @@
+@define-color arc-blue #0062f5;
+@define-color arc-blue-light #4accf5;
+@define-color arc-black #2d323d;
+@define-color arc-red #000000;
+@define-color arc-blue-hover #629de2;
+@define-color arc-blue-active #3aa3e2;
+@define-color default-grey #666666;
+
+
+/*
+GtkLabel {
+			font-family: Quattrocento Sans Bold;
+		}
+		
+*/
+
+#WINDOW{
+
+	background-color: #ffffff;
+	border: 0px;
+		
+}
+
+#NOTIF_LABEL{
+	background: #3366cc;
+	font: 11px Quattrocento Sans Bold;
+	color:white;
+	border: dashed 1px silver;
+	padding:6px;
+}
+
+
+
+
+#MSG_LABEL {
+	color: @arc-blue;
+	font: 11pt Quattrocento Sans Bold;
+
+}
+
+#MSG_LABEL_DELETE {
+	color: red;
+	font: 11pt Quattrocento Sans Bold;
+
+}
+
+#WHITE_BACKGROUND {
+	background: rgba(1,1,1,0);
+	box-shadow: 1px 1px 1px 10px white;
+		
+}
+
+#INFO_LABEL
+{
+	font: 10.5pt Quattrocento Sans Bold;
+	color: #888888;
+	
+}
+
+/*
+#CLOSE_BUTTON{
+	border-width: 0px;
+	box-shadow: none;
+	border-color: #76819a;
+	background-image:-gtk-gradient (linear,	left top, left bottom, from (#76819a),  to (#76819a));
+	font: 11pt Roboto Light;
+	text-shadow: none;
+	color: rgba(0,0,0,0.7);
+}
+
+#CLOSE_BUTTON:hover {
+	border-color: #209ddd;
+	background-image:-gtk-gradient (linear,	left top, left bottom, from (#209ddd),  to (#209ddd));
+	box-shadow: -0.5px 3px 3px #aaaaaa;
+	font: 11pt Roboto Light;
+	text-shadow: none;
+	color: rgba(255,255,255,1);
+}
+*/
