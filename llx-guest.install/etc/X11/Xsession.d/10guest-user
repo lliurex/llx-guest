@@ -7,7 +7,8 @@ if [ "$UID" = "59999" ]; then
 	rsync -ax /etc/skel/ $TMP_DIR
 
 	if [ -e /usr/share/llx-guest/rsrc/face.icon.png ]; then
-		cp /usr/share/llx-guest/rsrc/face.icon.png $TMP_DIR/.face.icon
+		cp /usr/share/llx-guest/rsrc/face.icon.png $TMP_DIR/.face 
+		ln -s $TMP_DIR/.face $TMP_DIR/.face.icon
 	fi
 
 	echo $TMP_DIR > /run/user/59999/home_dir
