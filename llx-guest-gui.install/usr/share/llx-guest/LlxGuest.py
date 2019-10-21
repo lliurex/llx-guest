@@ -24,7 +24,6 @@ class LlxGuest:
 
 	DEBUG= False
 	CSS_FILE="/usr/share/llx-guest/rsrc/style.css"
-	CSS_FILE="/home/lliurex/llx-guest/llx-guest-gui.install/usr/share/llx-guest/style.css"
 
 	def printd (self,text):
 
@@ -95,44 +94,14 @@ class LlxGuest:
 
 	def switch_initial_state(self):
 		
-		'''
-		try:
-			if GuestUser.check_permission()[0]:
-				self.switch_guest_error_state=False
-				self.state=False
-				self.switch_guest.set_state(False)
-				with open("/etc/passwd") as infile:
-					for line in infile:
-						line = line.rstrip('\n')
-						if "invitado" in line:
-							self.state=True
-							self.switch_guest.set_state(True)
-				
-				self.switch_guest_error_state=False
-			else:
-				self.switch_guest.set_sensitive(False)
-				self.msg_label.set_text(_("You don't have admin permissions to change files\n Please contact with the administrator"))
-				self.printd("You don't have admin permissions to change files. Please contact with the administrator")
-				return [False]
-		
-		except Exception as e:
-			self.switch_guest.set_sensitive(False)
-			self.msg_label.set_text(_("You don't have admin permissions to change files\n Please contact with the administrator"))
-			self.printd("You don't have admin permissions to change files. Please contact with the administrator")
-			self.printd ("%s"%e)
-			return [False,str(e)]
-		'''
-		
 		if self.get_guest_status():
 			self.switch_guest.set_state(True)
 		
 		if not self.check_permissions():
 			self.switch_guest.set_sensitive(False)
 			self.msg_label.set_text(_("You don't have privileges to enable or disable guest user."))
-			
 		
 		return True
-		
 
 	# def_switch_initial_state
 
