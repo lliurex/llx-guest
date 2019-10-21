@@ -1,0 +1,11 @@
+# GUEST ONLY LOGIC
+
+if [ "$UID" = "59999" ]; then
+
+	TMP_DIR=$(mktemp -d)
+	export HOME=$TMP_DIR
+	rsync -ax /etc/skel/ $TMP_DIR
+	echo $TMP_DIR > /run/user/59999/home_dir
+
+fi
+

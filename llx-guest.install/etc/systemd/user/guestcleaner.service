@@ -1,0 +1,12 @@
+[Unit]
+Description=Deletes guest files after logout
+ConditionUser=59999
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/bin/true
+ExecStop=/usr/bin/llx-guest-user-clean
+
+[Install]
+WantedBy=default.target
