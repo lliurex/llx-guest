@@ -1,10 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=LlX Guest 
-Name[es]=LlX Guest
-Name[ca_ES@valencia]=LlX Guest
-Name[ca]=LlX Guest
-Name[ca_ES.UTF-8@valencia]=LlX Guest
+Name=Guest Account Manager
+Name[es]= Gestor de cuenta de Invitado
+Name[ca_ES@valencia]=Guest Account Manager
+Name[ca]=Guest Account Manager
+Name[ca_ES.UTF-8@valencia]=Guest Account Manager
 TryExec=/usr/sbin/llx-guest-gui
 Comment=Add or remove guest user from system
 Comment[ca_ES@valencia]=Add or remove guest user from system
@@ -16,4 +16,4 @@ Exec=/usr/bin/llx-guest-gui
 Icon=llx-guest
 Terminal=false
 Type=Application
-Categories=GNOME;GTK;LliureX-Administration;
+Categories=LliureX-Administration;
