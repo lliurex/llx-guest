@@ -1,3 +1,9 @@
+llx-guest (0.2) bionic; urgency=medium
+
+  * Adding guest-user to default groups
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 21 Oct 2019 16:28:47 +0200
+
 llx-guest (0.1) bionic; urgency=medium
 
   * new n4d-guestmanager package
