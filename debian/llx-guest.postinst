@@ -10,6 +10,7 @@ OUR_PACKAGE="llx-guest"
 case $1 in 
 
         configure)
+		systemctl --global enable guestcleaner.service || true
                 ;;
 	   abort-upgrade|abort-remove|abort-deconfigure)
 			   ;;
