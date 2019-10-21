@@ -3,46 +3,49 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-02 11:55+0200\n"
-"PO-Revision-Date: 2019-10-02 11:57+0200\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: es_ES\n"
+"POT-Creation-Date: 2019-10-21 13:31+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../lliurex-perfilreset.install/usr/share/lliurex-perfilreset/rsrc/lliurex-perfilreset.ui:27
-msgid "Reset profile"
-msgstr "Restablecer perfil"
-
-#: ../lliurex-perfilreset.install/usr/share/lliurex-perfilreset/LliurexPerfilreset.py:88
-msgid "Resetting profile..."
-msgstr "Restableciendo perfil..."
-
-#: ../lliurex-perfilreset.install/usr/share/lliurex-perfilreset/LliurexPerfilreset.py:156
-msgid "You must restart the session to end the process"
-msgstr "Debe reiniciar la sesión para finalizar el proceso"
-
-#: ../lliurex-perfilreset.install/usr/share/lliurex-perfilreset/LliurexPerfilreset.py:215
-#, python-format
-msgid ""
-"%s open terminals have been detected.\n"
-"In order for the terminal configuration to be restored they must be\n"
-"closed before starting the process"
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:7
+msgid "Llx Guest"
 msgstr ""
-"Se ha detectado %s terminal(es) abiertas.\n"
-"Para que también se restaure la configuración de la terminal deben ser\n"
-"cerradas antes de iniciar el proceso"
 
-#~ msgid "Resetear Perfil Gráfico"
-#~ msgstr "Resetea el escritorio dejándolo en el formato de LliureX por defecto"
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:47
+msgid "Guest user"
+msgstr "Usuario Invitado"
 
-#~ msgid "Close"
-#~ msgstr "Cerrar"
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:93
+msgid "Enable or disable a guest user account in SDDM (Login Manager)"
+msgstr "Habilita o deshabilita una cuenta de invitado en SDDM (Gestor de entrada)"
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:131
+msgid "You don't have privileges to enable or disable guest user."
+msgstr "No tienes privilegios para habilitar o deshabilitar un invitado."
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:159
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:190
+msgid "Please wait until the process is finished"
+msgstr "Por favor espera hasta que el proceso termine"
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:242
+msgid "There has been a problem creating guest user."
+msgstr "Ha habido un problema creando el usuario invitado."
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:248
+msgid "Guest user added."
+msgstr "Usuario invitado añadido."
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:251
+msgid "Guest user deleted."
+msgstr "Usuario invitado borrado."
