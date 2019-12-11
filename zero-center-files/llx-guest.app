@@ -1,13 +1,14 @@
 Name=llx-guest
 Name[en]=Guest Account Manager
 Name[es]=Gestor de cuenta de Inivitado
-Name[qcv]=Guest Account Manager
+Name[ca_ES@valencia]=Gestor de compte de Convidat
+Name[ca_ES.UTF-8@valencia]=Gestor de compte de Convidat
 Comment=Add or delete guest user to the system
 Comment[es]=Activa o desactiva el usuario invitado en el systema
-Comment[qcv]=Activa o desactiva el usuario invitado en el systema
+Comment[ca_ES@valencia]=Activa o desactiva l'usuari convidat en el sistema
+Comment[ca_ES.UTF-8@valencia]=Activa o desactiva l'usuari convidat en el sistema
 Icon=llx-guest
 Groups=sudo;
 Category=Configuration
 ScriptPath=llx-guest.zmd
 Using=pkexec
-

@@ -1,0 +1,56 @@
+# Spanish translations for PACKAGE package
+# Traducciones al español para el paquete PACKAGE.
+# Copyright (C) 2019 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# lliurex <lliurex@gva.es>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-21 13:31+0200\n"
+"PO-Revision-Date: 2019-12-11 12:32+0100\n"
+"Last-Translator: lliurex <lliurex@gva.es>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:7
+msgid "Llx Guest"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:47
+msgid "Guest user"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:93
+msgid "Enable or disable a guest user account in SDDM (Login Display Manager)"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:131
+msgid "You don't have privileges to enable or disable guest user."
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:159
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:190
+msgid "Please wait until the process is finished"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:171
+msgid "You must wait to end the process......keep calm."
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:242
+msgid "There has been a problem creating guest user."
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:248
+msgid "Guest user added."
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:251
+msgid "Guest user deleted."
+msgstr ""
