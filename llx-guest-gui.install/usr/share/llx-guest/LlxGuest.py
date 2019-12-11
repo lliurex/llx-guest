@@ -14,7 +14,7 @@ import os
 
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-#gettext.textdomain('lliurex-perfilreset')
+gettext.textdomain('llx-guest-gui')
 _ = gettext.gettext
 
 
