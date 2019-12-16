@@ -1,3 +1,9 @@
+llx-guest (0.5-2) bionic; urgency=medium
+
+  * Added valencian translations
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 16 Dec 2019 13:03:35 +0100
+
 llx-guest (0.5-1) bionic; urgency=medium
 
   * Fixed package build deps
