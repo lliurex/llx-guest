@@ -26,7 +26,7 @@ msgid "Guest user"
 msgstr "Usuario Invitado"
 
 #: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:93
-msgid "Enable or disable a guest user account in SDDM (Login Manager)"
+msgid "Enable or disable a guest user account in SDDM (Login Display Manager)"
 msgstr "Habilita o deshabilita una cuenta de invitado en SDDM (Gestor de entrada)"
 
 #: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:131

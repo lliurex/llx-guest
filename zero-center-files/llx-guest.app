@@ -1,6 +1,6 @@
 Name=llx-guest
 Name[en]=Guest Account Manager
-Name[es]=Gestor de cuenta de Inivitado
+Name[es]=Gestor de cuenta de Invitado
 Name[ca_ES@valencia]=Gestor de compte de Convidat
 Name[ca_ES.UTF-8@valencia]=Gestor de compte de Convidat
 Comment=Add or delete guest user to the system
