@@ -90,7 +90,7 @@
               <object class="GtkLabel" id="info_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Enable or disable a guest user account in SDDM (Login Manager)</property>
+                <property name="label" translatable="yes">Enable or disable a guest user account in SDDM (Login Display Manager)</property>
                 <property name="xalign">0</property>
               </object>
               <packing>
