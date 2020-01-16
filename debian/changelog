@@ -1,3 +1,9 @@
+llx-guest (0.6) bionic; urgency=medium
+
+  * Added pam-config to force mkhomedir into pam configuration
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Thu, 16 Jan 2020 12:38:54 +0100
+
 llx-guest (0.5-2) bionic; urgency=medium
 
   * Added valencian translations
