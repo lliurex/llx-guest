@@ -75,6 +75,23 @@ class GuestAccountManager:
 	#def _disable_password_change
 			
 	
+	def _set_pam_config(self,status=True):
+		
+		mode="--enable"		
+		if not status:
+			mode="--remove"
+		command="pam-auth-update %s guestuser"%mode
+		
+		ret=self._run_command(command)
+		
+		if ret["returncode"]==0:
+			return True
+		else:
+			return False
+		
+	#def _set_pam_config
+	
+	
 	# ############## #
 	# PUBLIC FUNCTIONS   #
 	# ############## #
@@ -141,7 +158,7 @@ class GuestAccountManager:
 				ret["msg"]="Guest user created"
 				
 				self._disable_password_change()
-				
+				self._set_pam_config(True)
 				self._set_sddm_button(True)
 				self.enabled=True
 			else:
@@ -170,6 +187,7 @@ class GuestAccountManager:
 				ret["status"]=True
 				ret["msg"]="%s disabled"%GuestAccountManager.GUEST_USER
 				self._set_sddm_button(False)
+				self._set_pam_config(False)
 				self.enabled=False
 			else:
 				ret["status"]=False
