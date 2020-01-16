@@ -1,4 +1,4 @@
-llx-guest (0.6) bionic; urgency=medium
+llx-guest (0.7) bionic; urgency=medium
 
   * Added pam-config to force mkhomedir into pam configuration
 
