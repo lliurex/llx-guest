@@ -1,4 +1,4 @@
-llx-guest (0.8) bionic; urgency=medium
+llx-guest (0.8.1) bionic; urgency=medium
 
   * Added user-dirs support. If executed in lliurex-classroom,
     lliurex-moving-core >= 4.5.3 is advised
