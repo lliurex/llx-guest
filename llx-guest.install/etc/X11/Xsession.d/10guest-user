@@ -12,5 +12,7 @@ if [ "$UID" = "59999" ]; then
 
 	echo $TMP_DIR > /run/user/59999/home_dir
 
+	run-parts /usr/share/llx-guest/postactions || true
+
 fi
 
