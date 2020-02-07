@@ -8,10 +8,9 @@ Standards-Version: 3.9.5
 
 Package: llx-guest
 Architecture: all
-Depends: ${misc:Depends}, n4d-guestmanager, python3, lliurex-desktop-sddm-theme (>=1.10.0.0)
+Depends: ${misc:Depends}, n4d-guestmanager (>=0.7), python3, lliurex-desktop-sddm-theme (>=1.10.0.0), debianutils
 Description: LliureX Guest
  Manage guest user account
-
 
 Package: n4d-guestmanager
 Architecture: all
