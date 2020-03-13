@@ -1,3 +1,9 @@
+llx-guest (0.8.2) bionic; urgency=medium
+
+  * Fixed desktop file
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Fri, 13 Mar 2020 10:22:16 +0100
+
 llx-guest (0.8.1) bionic; urgency=medium
 
   * Added user-dirs support. If executed in lliurex-classroom,
