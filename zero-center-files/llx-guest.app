@@ -11,4 +11,3 @@ Icon=llx-guest
 Groups=sudo;
 Category=Configuration
 ScriptPath=llx-guest.zmd
-Using=pkexec
