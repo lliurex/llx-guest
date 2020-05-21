@@ -3,6 +3,8 @@
 import xmlrpc.client
 import ssl
 import sys
+import os
+import grp
 
 ACTIONS_LIST=["enable","disable","status","help","-h","--help"]
 
@@ -19,9 +21,13 @@ class Guest:
 
 		if action not in ["enable","disable","status"]:
 			sys.exit(1)
-			
+		
 		context=ssl._create_unverified_context()	
 		self.n4d_client=xmlrpc.client.ServerProxy("https://%s:9779"%server,allow_none=True,context=context)
+		
+		if not self.get_user_info():
+			print("User not allowed to run this program.")
+			sys.exit(1)
 		
 		try:
 			self.actions[action]()
@@ -31,6 +37,38 @@ class Guest:
 		
 	#def __init__
 	
+	
+	def get_user_info(self):
+		
+		self.user=os.environ["USER"]
+		groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
+		
+		if "sudo" not in groups and "admins" not in groups:
+			return False
+		
+		if not self.get_n4d_ticket():
+			return False
+		
+		self.user_info=(self.user,self.ticket)
+		
+		return True
+		
+	#def get_user_info
+	
+	
+	def get_n4d_ticket(self):
+		
+		self.n4d_client.create_ticket("","NTicketsManager",self.user)
+		
+		t="/run/n4d/tickets/%s"%self.user
+		if not os.path.exists(t):
+			return False
+		
+		f=open(t)
+		self.ticket=f.readline()
+		f.close()
+
+		return True
 	
 	def get_n4d_key(self):
 	
@@ -56,8 +94,9 @@ class Guest:
 	def enable_guest_user(self):
 		
 		#self.dprint("Enabling guest user...")
-		key=self.get_n4d_key()
-		ret=self.n4d_client.enable_guest_user(key,"GuestAccountManager")
+		#key=self.get_n4d_key()
+		
+		ret=self.n4d_client.enable_guest_user(self.user_info,"GuestAccountManager")
 		if ret["status"]:
 			self.dprint("guest user enabled")
 			sys.exit(0)
@@ -71,8 +110,8 @@ class Guest:
 	def disable_guest_user(self):
 		
 		#self.dprint("Disabling guest user...")
-		key=self.get_n4d_key()
-		ret=self.n4d_client.disable_guest_user(key,"GuestAccountManager")
+		#key=self.get_n4d_key()
+		ret=self.n4d_client.disable_guest_user(self.user_info,"GuestAccountManager")
 		if ret["status"]:
 			self.dprint("guest user disabled")
 			sys.exit(0)

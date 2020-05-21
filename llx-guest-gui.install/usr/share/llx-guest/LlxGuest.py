@@ -11,7 +11,7 @@ import sys
 import threading
 import time
 import os
-
+import grp
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 gettext.textdomain('llx-guest-gui')
@@ -270,12 +270,13 @@ class LlxGuest:
 	
 	def check_permissions(self):
 		
-		try:
-			f=open("/run/llx-guest.run","w")
-			f.close()
-			return True
-		except:
+		self.user=os.environ["USER"]
+		groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
+		
+		if "sudo" not in groups and "admins" not in groups:
 			return False
+		else:
+			return True
 		
 	#def check_permissions
 
