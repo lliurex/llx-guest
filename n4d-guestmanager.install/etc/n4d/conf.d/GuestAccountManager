@@ -5,5 +5,5 @@ class=GuestAccountManager
 [METHODS]
 get_guest_status=anonymous
 fix_guest_password=anonymous
-enable_guest_user=adm,admins
-disable_guest_user=adm,admins
+enable_guest_user=sudo,admins
+disable_guest_user=sudo,admins
