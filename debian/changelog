@@ -1,3 +1,10 @@
+llx-guest (0.19.2) focal; urgency=medium
+
+  * Migrated n4d plugin to new n4d
+  * Initial release for focal
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 04 May 2021 17:18:02 +0200
+
 llx-guest (0.9.2) bionic; urgency=medium
 
   * Fixed po file
