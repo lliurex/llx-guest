@@ -14,7 +14,7 @@ Description: LliureX Guest
 
 Package: n4d-guestmanager
 Architecture: all
-Depends: ${misc:Depends}, n4d-guestmanager, python, n4d
+Depends: ${misc:Depends},python3, n4d, python3-n4d
 Description: N4d Guest Manager plugin
  Plugin to manage guest-user account
 
