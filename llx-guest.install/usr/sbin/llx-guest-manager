@@ -45,7 +45,7 @@ class Guest:
 		
 		if "sudo" not in groups and "admins" not in groups:
 			return False
-		
+		print(self.user)
 		if not self.get_n4d_ticket():
 			return False
 		
@@ -58,9 +58,13 @@ class Guest:
 	
 	def get_n4d_ticket(self):
 		
-		self.n4d_client.create_ticket("","NTicketsManager",self.user)
+		try:
+			self.n4d_client.create_ticket(self.user)
+		except Exception as e:
+			print(str(e))	
 		
 		t="/run/n4d/tickets/%s"%self.user
+		print(t)
 		if not os.path.exists(t):
 			return False
 		
@@ -96,7 +100,7 @@ class Guest:
 		#self.dprint("Enabling guest user...")
 		#key=self.get_n4d_key()
 		
-		ret=self.n4d_client.enable_guest_user(self.user_info,"GuestAccountManager")
+		ret=self.n4d_client.enable_guest_user(self.user_info,"GuestAccountManager").get('return',None)
 		if ret["status"]:
 			self.dprint("guest user enabled")
 			sys.exit(0)
@@ -111,7 +115,7 @@ class Guest:
 		
 		#self.dprint("Disabling guest user...")
 		#key=self.get_n4d_key()
-		ret=self.n4d_client.disable_guest_user(self.user_info,"GuestAccountManager")
+		ret=self.n4d_client.disable_guest_user(self.user_info,"GuestAccountManager").get('return',None)
 		if ret["status"]:
 			self.dprint("guest user disabled")
 			sys.exit(0)
@@ -125,7 +129,7 @@ class Guest:
 	def get_guest_status(self):
 		
 		self.dprint("Getting guest user status...")
-		ret=self.n4d_client.get_guest_status("","GuestAccountManager")
+		ret=self.n4d_client.get_guest_status("","GuestAccountManager").get('return',None)
 		if ret["status"]==True:
 			self.dprint("guest-user is enabled")
 			sys.exit(0)

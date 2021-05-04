@@ -55,6 +55,9 @@ class LlxGuest:
 		
 		self.main_box=builder.get_object("main_box")
 		self.close_button=builder.get_object("close_button")
+		self.msg_label_box=builder.get_object("msg_label_box")
+		self.msg_ok_img=builder.get_object("msg_ok_img")
+		self.msg_error_img=builder.get_object("msg_error_img")
 		self.msg_label=builder.get_object("msg_label")
 		self.info_label=builder.get_object("info_label")
 
@@ -67,12 +70,13 @@ class LlxGuest:
 		
 		self._set_css_info()
 		
-		self.switch_initial_state()
+		initial_state=self.switch_initial_state()
 		self.connect_signals()
-		
 		self.main_window.show_all()
+		self.msg_ok_img.hide()
 		self.spinner.hide()
-		#self.msg_label.hide()
+		if initial_state:
+			self.msg_error_img.hide()
 		
 
 	#def start_gui
@@ -99,8 +103,11 @@ class LlxGuest:
 		
 		if not self.check_permissions():
 			self.switch_guest.set_sensitive(False)
+			self.msg_label_box.set_name("ERROR_BOX")
+			self.msg_error_img.show()
 			self.msg_label.set_text(_("You don't have privileges to enable or disable guest user."))
-		
+			return False
+
 		return True
 
 	# def_switch_initial_state
@@ -116,7 +123,7 @@ class LlxGuest:
 		
 		self.main_window.set_name("WINDOW")
 		self.close_button.set_name("CLOSE_BUTTON")
-		self.msg_label.set_name("MSG_LABEL")
+		#self.msg_label.set_name("MSG_LABEL")
 		self.info_label.set_name("INFO_LABEL")
 		
 	#def set_css_info	
@@ -126,6 +133,10 @@ class LlxGuest:
 		
 		if self.lock_quit:
 			self.msg_label.set_text(_("Please wait until the process is finished"))
+			self.msg_label_box.set_name("HIDE_BOX")
+			self.msg_ok_img.hide()
+			self.msg_error_img.hide()
+			self.msg_label.set_name("MSG_LABEL")
 			self.msg_label.show()
 		else:	
 			Gtk.main_quit()
@@ -138,6 +149,10 @@ class LlxGuest:
 
 		if self.lock_quit:
 			self.msg_label.set_text(_("Please wait until the process is finished"))
+			self.msg_label_box.set_name("HIDE_BOX")
+			self.msg_ok_img.hide()
+			self.msg_error_img.hide()
+			self.msg_label.set_name("MSG_LABEL")			
 			self.msg_label.show()
 			return True
 		else:
@@ -155,6 +170,10 @@ class LlxGuest:
 		self.close_button.set_sensitive(False)
 		self.lock_quit=True
 		#self.msg_label.set_name("MSG_LABEL_DELETE")
+		self.msg_label_box.set_name("HIDE_BOX")
+		self.msg_ok_img.hide()
+		self.msg_error_img.hide()
+		self.msg_label.set_name("MSG_LABEL")	
 		self.msg_label.set_text(_("Please wait until the process is finished"))
 		self.spinner.show()
 		th=threading.Thread(target=self.th_add_guest_user)
@@ -206,18 +225,28 @@ class LlxGuest:
 		
 		self.lock_quit=False
 		if self.switch_guest_error_state:
-			self.msg_label.set_name("MSG_LABEL")
+			#self.msg_label.set_name("MSG_LABEL")
+			self.msg_label_box.set_name("ERROR_BOX")
+			self.msg_ok_img.hide()
+			self.msg_error_img.show()
+			#self.msg_label.set_name("INFO_LABEL")				
 			self.msg_label.set_text(_("There has been a problem creating guest user."))
+			self.msg_label.set_name("BOX_LABEL")
 			self.switch_guest.set_state(self.state)
 		else:
 			
 			if self.state:
-				self.msg_label.set_name("MSG_LABEL")
+				#self.msg_label.set_name("MSG_LABEL")
 				self.msg_label.set_text(_("Guest user added."))
 			else:
-				self.msg_label.set_name("MSG_LABEL")
+				#self.msg_label.set_name("MSG_LABEL")
 				self.msg_label.set_text(_("Guest user deleted."))
 			
+			self.msg_label_box.set_name("SUCCESS_BOX")
+			self.msg_ok_img.show()
+			self.msg_error_img.hide()
+			self.msg_label.set_name("BOX_LABEL")
+
 			self.switch_guest_error_state=False
 		self.msg_label.show()
 
@@ -273,7 +302,8 @@ class LlxGuest:
 		self.user=os.environ["USER"]
 		groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
 		
-		if "sudo" not in groups and "admins" not in groups:
+		print(groups)
+		if "sudo" not in groups and "admin" not in groups:
 			return False
 		else:
 			return True
