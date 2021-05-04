@@ -1,0 +1,20 @@
+Source: llx-guest
+Section: admin
+Priority: optional
+Maintainer: Equipo LliureX <lliurex@gva.es>
+Uploaders:Raul Rodrigo Segura <lliurex_devel3@edu.gva.es>,  David Montalva Furio <montalva_dav@gva.es>, Hector Garcia Huerta <lliurex_devel1@edu.gva.es>, Daniel Duran Vecino <daduve@gmail.com>, M.Angel Juan <m.angel.juan@gmail.com>
+Build-Depends:debhelper (>= 9), llxsrchelper, python3-poinstaller, zero-dev
+Standards-Version: 3.9.5
+
+Package: llx-guest
+Architecture: all
+Depends: ${misc:Depends}, n4d-guestmanager (>=0.7), python3, lliurex-sddm-theme (>=1.10.0.0), debianutils
+Description: LliureX Guest
+ Manage guest user account
+
+Package: n4d-guestmanager
+Architecture: all
+Depends: ${misc:Depends}, n4d-guestmanager, python, n4d
+Description: N4d Guest Manager plugin
+ Plugin to manage guest-user account
+
