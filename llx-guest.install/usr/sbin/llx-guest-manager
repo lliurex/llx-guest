@@ -45,7 +45,7 @@ class Guest:
 		
 		if "sudo" not in groups and "admins" not in groups:
 			return False
-		print(self.user)
+
 		if not self.get_n4d_ticket():
 			return False
 		
