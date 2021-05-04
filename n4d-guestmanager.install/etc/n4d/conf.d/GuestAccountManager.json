@@ -1,0 +1,31 @@
+{
+	"SETUP":{
+		"type":"python",
+		"path":"GuestAccountManager.py",
+		"class":"GuestAccountManager"
+	},
+	"METHODS":{
+		"get_guest_status":{
+			"allowed_groups": [
+              "anonymous"
+            ]
+           },
+    "fix_guest_password":{
+			"allowed_groups": [
+              "anonymous"
+            ]
+          },
+		"enable_guest_user":{
+			"allowed_groups": [
+              "sudo",
+              "admins"
+            ]
+        },    
+		"disable_guest_user":{
+			"allowed_groups": [
+              "sudo",
+              "admins"
+            ]
+         }
+    }
+}

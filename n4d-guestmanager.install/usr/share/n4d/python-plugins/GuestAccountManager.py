@@ -1,6 +1,7 @@
 import os
 import subprocess
 import pwd
+import n4d.responses
 
 class GuestAccountManager:
 	
@@ -111,7 +112,8 @@ class GuestAccountManager:
 		
 		self.enabled=ret["status"]
 			
-		return ret
+		#return ret
+		return n4d.responses.build_successful_call_response(ret)
 		
 	#def get_guest_state
 	
@@ -138,7 +140,8 @@ class GuestAccountManager:
 			ret["status"]=False
 			ret["msg"]="User does not exist"
 			
-		return ret
+		#return ret
+		return n4d.responses.build_successful_call_response(ret)
 		
 		
 	#def fix_guest_password
@@ -170,7 +173,8 @@ class GuestAccountManager:
 		ret["status"]=False
 		ret["msg"]="%s already enabled"%GuestAccountManager.GUEST_USER
 		
-		return ret
+		#return ret
+		return n4d.responses.build_successful_call_response(ret)
 			
 	#def add_guest_user
 	
@@ -198,7 +202,9 @@ class GuestAccountManager:
 		ret["status"]=False
 		ret["msg"]="%s is not enabled"%GuestAccountManager.GUEST_USER
 		
-		return ret
+		#return ret
+		return n4d.responses.build_successful_call_response(ret)
+
 		
 	#def remove_guest_user
 	
@@ -210,7 +216,7 @@ class GuestAccountManager:
 if __name__=="__main__":
 	
 	gam=GuestAccountManager()
-	print gam.get_guest_state()
-	print gam.enable_guest_user()
+	print(gam.get_guest_state())
+	print(gam.enable_guest_user())
 	#print gam.fix_guest_password()
-	print gam.disable_guest_user()
+	print(gam.disable_guest_user())
