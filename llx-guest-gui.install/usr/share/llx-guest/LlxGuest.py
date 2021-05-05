@@ -302,8 +302,7 @@ class LlxGuest:
 		self.user=os.environ["USER"]
 		groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
 		
-		print(groups)
-		if "sudo" not in groups and "admin" not in groups:
+		if "sudo" not in groups and "admins" not in groups:
 			return False
 		else:
 			return True
