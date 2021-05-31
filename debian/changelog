@@ -1,3 +1,9 @@
+llx-guest (0.19.4) focal; urgency=medium
+
+  * Fixed perfomance with pkexec
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 31 May 2021 13:41:28 +0200
+
 llx-guest (0.19.3) focal; urgency=medium
 
   * Clean and fixed gui script
