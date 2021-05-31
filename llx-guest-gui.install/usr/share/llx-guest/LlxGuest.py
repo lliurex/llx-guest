@@ -11,6 +11,7 @@ import sys
 import threading
 import time
 import os
+import pwd
 import grp
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -299,9 +300,13 @@ class LlxGuest:
 	
 	def check_permissions(self):
 		
-		self.user=os.environ["USER"]
-		groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
+		if "PKEXEC_UID" in os.environ:
+			self.user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
+		else:
+			self.user=os.environ["USER"]
 		
+		groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
+
 		if "sudo" not in groups and "admins" not in groups:
 			return False
 		else:

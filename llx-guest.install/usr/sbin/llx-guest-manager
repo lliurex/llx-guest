@@ -5,6 +5,7 @@ import ssl
 import sys
 import os
 import grp
+import pwd
 
 ACTIONS_LIST=["enable","disable","status","help","-h","--help"]
 
@@ -40,7 +41,12 @@ class Guest:
 	
 	def get_user_info(self):
 		
-		self.user=os.environ["USER"]
+		#self.user=os.environ["USER"]
+		if "PKEXEC_UID" in os.environ:
+			self.user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
+		else:
+			self.user=os.environ["USER"]
+
 		groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
 		
 		if "sudo" not in groups and "admins" not in groups:
