@@ -47,7 +47,12 @@ class Guest:
 		else:
 			self.user=os.environ["USER"]
 
-		groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
+		#old groups method
+		#groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
+		
+		gid = pwd.getpwnam(self.user).pw_gid
+		groups_gids = os.getgrouplist(self.user, gid)
+		groups = [ grp.getgrgid(x).gr_name for x in groups_gids ]
 		
 		if "sudo" not in groups and "admins" not in groups:
 			return False
