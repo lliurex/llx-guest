@@ -1,3 +1,9 @@
+llx-guest (0.20) focal; urgency=medium
+
+  * fixed guestcleaner unit service. remainafterexit from true to yes
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 12 Jul 2021 10:25:02 +0200
+
 llx-guest (0.19.5) focal; urgency=medium
 
   * New discover function groups in CDC validation.
