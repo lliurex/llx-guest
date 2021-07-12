@@ -4,7 +4,7 @@ ConditionUser=59999
 
 [Service]
 Type=oneshot
-RemainAfterExit=true
+RemainAfterExit=yes
 ExecStart=/bin/true
 ExecStop=/usr/bin/llx-guest-user-clean
 
