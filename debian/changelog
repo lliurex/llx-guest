@@ -1,3 +1,11 @@
+llx-guest (0.21) focal; urgency=medium
+
+  * Fixed guest-user home dir in passwd. if set in /run/user/5999/home, user
+    is unable to write in /run/user/5999/. Changed home to
+    /run/guest-user/home instead.
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Fri, 23 Jul 2021 18:10:12 +0200
+
 llx-guest (0.20) focal; urgency=medium
 
   * fixed guestcleaner unit service. remainafterexit from true to yes
