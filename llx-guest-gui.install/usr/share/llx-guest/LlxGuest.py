@@ -313,7 +313,7 @@ class LlxGuest:
 		groups = [ grp.getgrgid(x).gr_name for x in groups_gids ]
 		
 
-		if "sudo" not in groups and "admins" not in groups:
+		if "sudo" not in groups and "admins" not in groups and "teachers" not in groups:
 			return False
 		else:
 			return True
