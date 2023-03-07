@@ -18,13 +18,15 @@
 		"enable_guest_user":{
 			"allowed_groups": [
               "sudo",
-              "admins"
+              "admins",
+	      "teachers"
             ]
         },    
 		"disable_guest_user":{
 			"allowed_groups": [
               "sudo",
-              "admins"
+              "admins",
+	      "teachers"
             ]
          }
     }

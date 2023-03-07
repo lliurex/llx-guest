@@ -54,7 +54,7 @@ class Guest:
 		groups_gids = os.getgrouplist(self.user, gid)
 		groups = [ grp.getgrgid(x).gr_name for x in groups_gids ]
 		
-		if "sudo" not in groups and "admins" not in groups:
+		if "sudo" not in groups and "admins" not in groups and "teachers" not in groups:
 			return False
 
 		if not self.get_n4d_ticket():
