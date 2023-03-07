@@ -1,3 +1,9 @@
+llx-guest (0.23.1) focal; urgency=medium
+
+  * Adding chromium-browser bin as well 
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Tue, 07 Mar 2023 11:27:31 +0100
+
 llx-guest (0.23) focal; urgency=medium
 
   * Adding chromium snap support 
