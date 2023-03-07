@@ -1,3 +1,9 @@
+llx-guest (0.22) focal; urgency=medium
+
+  * Adding chromium snap support 
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Tue, 07 Mar 2023 09:26:20 +0100
+
 llx-guest (0.21) focal; urgency=medium
 
   * Fixed guest-user home dir in passwd. if set in /run/user/5999/home, user
