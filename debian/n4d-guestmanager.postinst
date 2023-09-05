@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+# Template for diversions
+ORIG_FILE="/usr/share/sddm/scripts/Xsetup"
+OUR_FILE="/usr/share/sddm/scripts/Xsetup.lliurex"
+OUR_PACKAGE="llx-guest"
+
+case $1 in 
+
+        configure)
+
+		n4d-modules enable-plugin /etc/n4d/conf.d/GuestAccountManager.json || true
+
+                ;;
+	   abort-upgrade|abort-remove|abort-deconfigure)
+			   ;;
+        *)
+                echo "Nothing to do"
+                ;; 
+esac
+
+#DEBHELPER#
+
+exit 0
+

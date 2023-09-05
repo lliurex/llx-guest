@@ -1,0 +1,26 @@
+#!/bin/sh
+set -e
+
+# Template for diversions
+ORIG_FILE="/usr/share/sddm/scripts/Xsetup"
+OUR_FILE="/usr/share/sddm/scripts/Xsetup.lliurex"
+OUR_PACKAGE="llx-guest"
+
+case $1 in 
+        remove|purge|abort-install|disappear)
+                if [ -f ${ORIG_FILE}.real ] ; then
+                        rm -f ${ORIG_FILE}
+                        dpkg-divert --package  ${OUR_PACKAGE} --rename --quiet --remove ${ORIG_FILE}|| true
+                fi
+
+		systemctl --global disable guestcleaner.service || true
+
+                ;;
+        *)
+                echo "Nothing to do"
+                ;; 
+esac
+
+# Other Stuff #
+
+#DEBHELPER#
