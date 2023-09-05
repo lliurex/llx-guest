@@ -1,3 +1,9 @@
+llx-guest (0.34) jammy; urgency=medium
+
+  * Initial release for Jammy
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 05 Sep 2023 12:14:20 +0200
+
 llx-guest (0.24) focal; urgency=medium
 
   * Adding $@ to chromium script to support extra args if needed 
