@@ -16,6 +16,7 @@ case $1 in
 			getent passwd guest-user || RC=1
 			if [ "$RC" == "0" ];then
 				ls /home/guest-user 2>/dev/null || mkdir /home/guest-user
+				chown -R guest-user:guest-user /home/guest-user
 				usermod -d /home/guest-user -m guest-user
 			fi
 			

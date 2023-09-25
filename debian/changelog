@@ -1,3 +1,9 @@
+llx-guest (0.32) focal; urgency=medium
+
+  * Fixed home dir ownership
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 25 Sep 2023 14:19:45 +0200
+
 llx-guest (0.31) focal; urgency=medium
 
   * home back to /home/guest-user
