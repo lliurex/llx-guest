@@ -1,3 +1,11 @@
+llx-guest (0.40) jammy; urgency=medium
+
+  * guest user back to /home/guest-user
+  * postinst fixes posible previous initializations
+  * n4d makes sure guest-user homedir is set to /home/guest-user on boot
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 25 Sep 2023 15:45:31 +0200
+
 llx-guest (0.34) jammy; urgency=medium
 
   * Initial release for Jammy
