@@ -11,13 +11,13 @@ case $1 in
 
         configure)
 		systemctl --global enable guestcleaner.service || true
-		if dpkg --compare-versions "$2" lt 0.35; then
+		if dpkg --compare-versions "$2" lt 0.36; then
 			RC=0
 			getent passwd guest-user 1>/dev/null || RC=1
 			if [ "$RC" = "0" ]; then
 				ls /home/guest-user 2>/dev/null || mkdir /home/guest-user
-				chown -R guest-user:nogroup /home/guest-user
-				usermod -d /home/guest-user -m guest-user
+				chown -R guest-user:nogroup /home/guest-user || true
+				usermod -d /home/guest-user -m guest-user || true
 			fi
 			
 		fi
