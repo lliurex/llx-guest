@@ -34,7 +34,7 @@ class GuestAccountManager:
 		try:
 			info=pwd.getpwnam("guest-user")
 			if info.pwd_dir != GuestAccountManager.GUEST_HOME:
-				os.system("usermod -d %s -m %s"%(GuestAccountManager.GUEST_HOME,GuestAccountManager.GUEST_USER))
+				os.system("usermod -d %s -m %s 1>/dev/null 2>/dev/null || true"%(GuestAccountManager.GUEST_HOME,GuestAccountManager.GUEST_USER))
 		except:
 			pass
 	
