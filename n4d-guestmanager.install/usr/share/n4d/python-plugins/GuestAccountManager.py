@@ -7,7 +7,8 @@ class GuestAccountManager:
 	
 	GUEST_USER="guest-user"
 	GUEST_UID=59999
-	GUEST_HOME="/run/%s/home"%GUEST_USER
+	#GUEST_HOME="/run/%s/home"%GUEST_USER
+	GUEST_HOME="/home/%s"%GUEST_USER
 	GUEST_PASSWORD="U6aMy0wojraho"
 	
 	def __init__(self):

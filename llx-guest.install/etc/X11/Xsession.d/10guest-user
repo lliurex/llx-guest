@@ -2,18 +2,13 @@
 
 if [ "$UID" = "59999" ]; then
 
-	TMP_DIR=$(mktemp -d)
-	export HOME=$TMP_DIR
-	export PATH=$HOME/.local/bin:$PATH
 	mkdir -p $HOME/.local/bin
 	
-	rsync -ax /etc/skel/ $TMP_DIR
+	rsync -ax /etc/skel/ $HOME
 
 	if [ -e /usr/share/llx-guest/rsrc/face.icon.png ]; then
-		cp /usr/share/llx-guest/rsrc/face.icon.png $TMP_DIR/.face.icon
+		cp /usr/share/llx-guest/rsrc/face.icon.png $HOME/.face.icon
 	fi
-
-	echo $TMP_DIR > /run/user/59999/home_dir
 
 	run-parts /usr/share/llx-guest/postactions || true
 
