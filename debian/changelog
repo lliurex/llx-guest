@@ -1,3 +1,9 @@
+llx-guest (0.37.1) focal; urgency=medium
+
+  * Removing output from os.system call in GuestAccountManager plugin
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 25 Sep 2023 15:43:35 +0200
+
 llx-guest (0.37) focal; urgency=medium
 
   * fixes home dir on boot in case update failed because guest user account
