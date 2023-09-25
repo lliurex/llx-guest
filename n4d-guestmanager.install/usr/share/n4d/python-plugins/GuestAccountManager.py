@@ -13,8 +13,12 @@ class GuestAccountManager:
 	
 	def __init__(self):
 		
+		self.enabled=False
 		self.get_guest_status()
 		
+		if self.enabled:
+			self._check_home_dir()
+			
 	#def init
 	
 	
@@ -24,6 +28,18 @@ class GuestAccountManager:
 		pass
 		
 	#def startup
+	
+	def _check_home_dir(self):
+	
+		try:
+			info=pwd.getpwnam("guest-user")
+			if info.pwd_dir != GuestAccountManager.GUEST_HOME:
+				os.system("usermod -d %s -m %s"%(GuestAccountManager.GUEST_HOME,GuestAccountManager.GUEST_USER))
+		except:
+			pass
+	
+	#def _check_home_dir
+	
 	
 	
 	def _run_command(self,command):
