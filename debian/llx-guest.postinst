@@ -11,6 +11,17 @@ case $1 in
 
         configure)
 		systemctl --global enable guestcleaner.service || true
+		if dpkg --compare-versions "$2" lt 0.20; then
+			RC=0
+			getent passwd guest-user || RC=1
+			if [ "$RC" == "0" ];then
+				ls /home/guest-user 2>/dev/null || mkdir /home/guest-user
+				usermod -d /home/guest-user -m guest-user
+			fi
+			
+		fi
+		
+		
                 ;;
 	   abort-upgrade|abort-remove|abort-deconfigure)
 			   ;;

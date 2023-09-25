@@ -1,3 +1,9 @@
+llx-guest (0.30) focal; urgency=medium
+
+  * home back to /home/guest-user
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 25 Sep 2023 14:04:51 +0200
+
 llx-guest (0.24) focal; urgency=medium
 
   * Adding $@ to chromium script to support extra args if needed 
