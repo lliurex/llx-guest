@@ -1,3 +1,10 @@
+llx-guest (0.41) jammy; urgency=medium
+
+  * Fullname, email and password restoration after user exists or system
+    reboots. 
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Tue, 18 Jun 2024 11:40:57 +0200
+
 llx-guest (0.40) jammy; urgency=medium
 
   * guest user back to /home/guest-user
