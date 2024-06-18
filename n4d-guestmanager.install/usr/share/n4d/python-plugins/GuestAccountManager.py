@@ -18,6 +18,8 @@ class GuestAccountManager:
 		
 		if self.enabled:
 			self._check_home_dir()
+			self.fix_guest_password()
+			self.fix_guest_fullname()
 			
 	#def init
 	
@@ -163,6 +165,36 @@ class GuestAccountManager:
 		
 	#def fix_guest_password
 	
+	def fix_guest_fullname(self):
+		
+		ret=self._build_response()
+		
+		if self.enabled:
+			command="chfn -f '' guest-user"
+			p_return=self._run_command(command)
+			
+			if p_return["returncode"]==0:
+				ret["status"]=True
+				ret["msg"]="Fullname changed"
+			else:
+				ret["status"]=False
+				ret["msg"]=p_return["stderr"]
+			
+			accounts_service_file="/var/lib/AccountsService/users/%s"%GuestAccountManager.GUEST_USER
+			
+			if os.path.exists(accounts_service_file):
+				os.remove(accounts_service_file)
+				
+			accounts_service_file="/var/lib/AccountsService/icons/%s"%GuestAccountManager.GUEST_USER
+			
+			if os.path.exists(accounts_service_file):
+				os.remove(accounts_service_file)
+				
+		else:
+			ret["status"]=False
+			ret["msg"]="Guest user is not enabled"
+			
+		return n4d.responses.build_successful_call_response(ret)
 	
 	def enable_guest_user(self):
 		
