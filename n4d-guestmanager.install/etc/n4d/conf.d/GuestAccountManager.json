@@ -10,7 +10,12 @@
               "anonymous"
             ]
            },
-    "fix_guest_password":{
+		"fix_guest_password":{
+			"allowed_groups": [
+              "anonymous"
+            ]
+          },
+		"fix_guest_fullname":{
 			"allowed_groups": [
               "anonymous"
             ]
