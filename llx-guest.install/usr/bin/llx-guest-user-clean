@@ -3,6 +3,8 @@
 if [ "$UID" = "59999" ]; then
 
 	rm -rf /home/guest-user/.* /home/guest-user/* 2>/dev/null
+	n4d-client call GuestAccountManager.fix_guest_password
+	n4d-client call GuestAccountManager.fix_guest_fullname
 
 fi
 
