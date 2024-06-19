@@ -1,3 +1,10 @@
+llx-guest (0.38) focal; urgency=medium
+
+  * Restoring fullname,email and password when exiting session or rebooting
+    system. 
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Wed, 19 Jun 2024 14:13:31 +0200
+
 llx-guest (0.37.1) focal; urgency=medium
 
   * Removing output from os.system call in GuestAccountManager plugin
