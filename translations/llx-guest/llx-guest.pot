@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 13:31+0200\n"
+"POT-Creation-Date: 2024-10-24 12:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,39 +17,79 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:7
-msgid "Llx Guest"
+#: ../llx-guest-gui.install/usr/share/llx-guest/llx-guest-gui:28
+msgid "You need administration privileges to run this application."
 msgstr ""
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:47
-msgid "Guest user"
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ApplicationOptions.qml:25
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:105
+msgid "Settings"
 msgstr ""
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/llx-guest.ui:93
-msgid "Enable or disable a guest user account in SDDM (Login Display Manager)"
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ApplicationOptions.qml:37
+msgid "Help"
 msgstr ""
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:131
-msgid "You don't have privileges to enable or disable guest user."
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:12
+msgid "Guest User"
 msgstr ""
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:159
-#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:190
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:44
+msgid "Enable a guest user account in SDDM (Login Display Manager)"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:73
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ChangesDialog.qml:67
+msgid "Apply"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:90
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ChangesDialog.qml:111
+msgid "Cancel"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:107
+msgid ""
+"The are pending changes to apply.\n"
+"Do you want apply the changes or discard them?"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:157
+msgid "Guest user added sucessfully"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:160
+msgid "Guest user deleted sucessfully"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:163
+msgid "Guest user already enabled"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:166
+msgid "Guest user already disabled"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:169
+msgid "There has been a problem creating guest user"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:172
+msgid "There has been a problem deleting guest use"
+msgstr ""
+
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:196
 msgid "Please wait until the process is finished"
 msgstr ""
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:171
-msgid "You must wait to end the process......keep calm."
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:208
+msgid "Restoring previous values. Wait a moment..."
 msgstr ""
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:242
-msgid "There has been a problem creating guest user."
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Loading.qml:40
+msgid "Loading. Wait a moment..."
 msgstr ""
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:248
-msgid "Guest user added."
-msgstr ""
-
-#: ../llx-guest-gui.install/usr/share/llx-guest/LlxGuest.py:251
-msgid "Guest user deleted."
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ChangesDialog.qml:89
+msgid "Discard"
 msgstr ""
