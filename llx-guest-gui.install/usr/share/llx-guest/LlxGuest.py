@@ -1,330 +1,349 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*
+#!/usr/bin/python3
 
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk,GObject, GLib, Gdk,Gio
-
-import signal
-import gettext
-import sys
-import threading
-import time
+from PySide6.QtCore import QObject,Signal,Slot,QThread,Property,QTimer,Qt,QModelIndex
 import os
+import threading
+import signal
+import copy
+import time
 import pwd
-import grp
+import GuestManager
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-gettext.textdomain('llx-guest-gui')
-_ = gettext.gettext
 
+class GatherInfo(QThread):
 
+	def __init__(self,*args):
 
+		QThread.__init__(self)
+	#def __init__
+		
 
-class LlxGuest:
+	def run(self,*args):
+		
+		time.sleep(1)
+		LlxGuest.guestMan.getGuestUserStatus()
 
-	DEBUG= False
-	CSS_FILE="/usr/share/llx-guest/rsrc/style.css"
+	#def run
 
-	def printd (self,text):
+#class GatherInfo
 
-		if LlxGuest.DEBUG:
-			print("[LlxGuestGui] %s"%text)
+class SetChanges(QThread):
 
-	# def printd
+	def __init__(self,*args):
 
+		QThread.__init__(self)
+
+		self.newValue=args[0]
+		self.ret=[]
+
+	#def __init__
+
+	def run(self,*args):
+		
+		if self.newValue:
+			self.ret=LlxGuest.guestMan.enableGuestUser()
+		else:
+			self.ret=LlxGuest.guestMan.disableGuestUser()
+
+	#def run
+
+#class SetChanges
+
+class LlxGuest(QObject):
+
+	guestMan=GuestManager.GuestManager()
 
 	def __init__(self):
+
+		QObject.__init__(self)
+		self.initBridge()
+
+	#def __init__
+
+	def initBridge(self):
+
+		self._isGuestUserEnabled=False
+		self._settingsChanged=False
+		self._showSettingsMessage=[False,"","Success"]
+		self._closeGui=False
+		self._closePopUp=True
+		self._showChangesDialog=False
+		self._currentStack=0
+		self._currentOptionsStack=0
+		self.correctCode=True
+		self.gatherInfo=GatherInfo()
+		self.gatherInfo.start()
+		self.gatherInfo.finished.connect(self._loadConfig)
+
+	#def initBridge
+
+	def _loadConfig(self):		
+
+		self._isGuestUserEnabled=LlxGuest.guestMan.isGuestUserEnabled
+		self.currentStack=1
+
+	#def _loadConfig
+
+	def _getCurrentStack(self):
+
+		return self._currentStack
+
+	#def _getCurrentStack
+
+	def _setCurrentStack(self,currentStack):
+
+		if self._currentStack!=currentStack:
+			self._currentStack=currentStack
+			self.on_currentStack.emit()
+
+	#def _setCurrentStack
+
+	def _getCurrentOptionsStack(self):
+
+		return self._currentOptionsStack
+
+	#def _getCurrentOptionsStack
+
+	def _setCurrentOptionsStack(self,currentOptionsStack):
+
+		if self._currentOptionsStack!=currentOptionsStack:
+			self._currentOptionsStack=currentOptionsStack
+			self.on_currentOptionsStack.emit()
+
+	#def _setCurrentOptionsStack
+
+	def _getIsGuestUserEnabled(self):
+
+		return self._isGuestUserEnabled
+
+	#def _getIsGuestUserEnabled
+
+	def _setIsGuestUserEnabled(self,isGuestUserEnabled):
+
+		if self._isGuestUserEnabled!=isGuestUserEnabled:
+			self._isGuestUserEnabled=isGuestUserEnabled
+			self.on_isGuestUserEnabled.emit()
+
+	#def _setIsGuestUserEnabled
+
+	def _getSettingsChanged(self):
+
+		return self._settingsChanged
+
+	#def _getSettingsChanged
+
+	def _setSettingsChanged(self,settingsChanged):
+
+		if self._settingsChanged!=settingsChanged:
+			self._settingsChanged=settingsChanged
+			self.on_settingsChanged.emit()
+
+	#def _setSettingsChanged
+
+	def _getShowSettingsMessage(self):
+
+		return self._showSettingsMessage
+
+	#def _getShowSettingsMessage
+
+	def _setShowSettingsMessage(self,showSettingsMessage):
+
+		if self._showSettingsMessage!=showSettingsMessage:
+			self._showSettingsMessage=showSettingsMessage
+			self.on_showSettingsMessage.emit()
+
+	#def _setShowSettingsMessage
+
+	def _getShowChangesDialog(self):
+
+		return self._showChangesDialog
+
+	#def _getShowChangesDialog
+
+	def _setShowChangesDialog(self,showChangesDialog):
+
+		if self._showChangesDialog!=showChangesDialog:
+			self._showChangesDialog=showChangesDialog
+			self.on_showChangesDialog.emit()
+
+	#def _setShowChangesDialog
+
+	def _getClosePopUp(self):
+
+		return self._closePopUp
+
+	#def _getClosePopUp	
+
+	def _setClosePopUp(self,closePopUp):
 		
-		self.llx_guest_bin="/usr/sbin/llx-guest-gui"
-		self.switch_guest_error_state=False
+		if self._closePopUp!=closePopUp:
+			self._closePopUp=closePopUp		
+			self.on_closePopUp.emit()
+
+	#def _setClosePopUp	
+
+	def _getCloseGui(self):
+
+		return self._closeGui
+
+	#def _getCloseGui	
+
+	def _setCloseGui(self,closeGui):
 		
-		self.start_gui()
-		GObject.threads_init()
-		Gtk.main()
+		if self._closeGui!=closeGui:
+			self._closeGui=closeGui		
+			self.on_closeGui.emit()
+
+	#def _setCloseGui	
+
+	@Slot(bool)
+	def manageChanges(self,value):
+
+		self.showSettingsMessage=[False,"","Success"]
 		
-	#def __init__(self):
-
-	def start_gui(self):
-
-		builder=Gtk.Builder()
-		builder.set_translation_domain('llx-guest-gui')
-		builder.add_from_file("/usr/share/llx-guest/rsrc/llx-guest.ui")
-		self.main_window=builder.get_object("main_window")
-		self.main_window.set_resizable(False)
-		self.main_window.set_icon_from_file('/usr/share/llx-guest/rsrc/llx-guest-icon.svg')
-		
-		self.main_box=builder.get_object("main_box")
-		self.close_button=builder.get_object("close_button")
-		self.msg_label_box=builder.get_object("msg_label_box")
-		self.msg_ok_img=builder.get_object("msg_ok_img")
-		self.msg_error_img=builder.get_object("msg_error_img")
-		self.msg_label=builder.get_object("msg_label")
-		self.info_label=builder.get_object("info_label")
-
-		self.switch_guest=builder.get_object("switch_guest")
-		self.switch_guest_label=builder.get_object("switch_guest_label")
-		
-		self.spinner=builder.get_object("spinner")
-
-		self.lock_quit=False
-		
-		self._set_css_info()
-		
-		initial_state=self.switch_initial_state()
-		self.connect_signals()
-		self.main_window.show_all()
-		self.msg_ok_img.hide()
-		self.spinner.hide()
-		if initial_state:
-			self.msg_error_img.hide()
-		
-
-	#def start_gui
-
-	
-
-	def connect_signals(self):
-		
-		self.main_window.connect("destroy",self.close_button_clicked)
-		#If process is alive destroy window is unable
-		self.main_window.connect("delete_event",self.window_close_clicked)
-		self.close_button.connect("clicked",self.close_button_clicked)
-		self.switch_guest.connect("state_set",self.switch_guest_modify)
-		
-
-		
-	#def connect_signals
-
-
-	def switch_initial_state(self):
-		
-		if self.get_guest_status():
-			self.switch_guest.set_state(True)
-		
-		if not self.check_permissions():
-			self.switch_guest.set_sensitive(False)
-			self.msg_label_box.set_name("ERROR_BOX")
-			self.msg_error_img.show()
-			self.msg_label.set_text(_("You don't have privileges to enable or disable guest user."))
-			return False
-
-		return True
-
-	# def_switch_initial_state
-
-
-	def _set_css_info(self):
-	
-		self.style_provider=Gtk.CssProvider()
-		f=Gio.File.new_for_path(LlxGuest.CSS_FILE)
-		self.style_provider.load_from_file(f)
-		Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(),self.style_provider,Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-		
-		
-		self.main_window.set_name("WINDOW")
-		self.close_button.set_name("CLOSE_BUTTON")
-		#self.msg_label.set_name("MSG_LABEL")
-		self.info_label.set_name("INFO_LABEL")
-		
-	#def set_css_info	
-
-
-	def close_button_clicked(self,widget=True):
-		
-		if self.lock_quit:
-			self.msg_label.set_text(_("Please wait until the process is finished"))
-			self.msg_label_box.set_name("HIDE_BOX")
-			self.msg_ok_img.hide()
-			self.msg_error_img.hide()
-			self.msg_label.set_name("MSG_LABEL")
-			self.msg_label.show()
-		else:	
-			Gtk.main_quit()
-			sys.exit(0)
-		
-	#def check_changes
-
-
-	def window_close_clicked(self,widget,event):
-
-		if self.lock_quit:
-			self.msg_label.set_text(_("Please wait until the process is finished"))
-			self.msg_label_box.set_name("HIDE_BOX")
-			self.msg_ok_img.hide()
-			self.msg_error_img.hide()
-			self.msg_label.set_name("MSG_LABEL")			
-			self.msg_label.show()
-			return True
-		else:
-			return False
-			
-	#def unable_quit
-	
-
-	def switch_guest_modify(self,widget,gparam):
-		if self.switch_guest_error_state:
-			return True
-
-			
-		self.switch_guest.set_sensitive(False)
-		self.close_button.set_sensitive(False)
-		self.lock_quit=True
-		#self.msg_label.set_name("MSG_LABEL_DELETE")
-		self.msg_label_box.set_name("HIDE_BOX")
-		self.msg_ok_img.hide()
-		self.msg_error_img.hide()
-		self.msg_label.set_name("MSG_LABEL")	
-		self.msg_label.set_text(_("Please wait until the process is finished"))
-		self.spinner.show()
-		th=threading.Thread(target=self.th_add_guest_user)
-		GLib.timeout_add(1000,self.show_reveal,th)
-		th.start()
-		
-		return False
-
-	#def reset_clicked
-	
-	# ##################### ##########################################
-	
-	def th_add_guest_user(self,*args):
-		self.switch_guest_error_state=False
-		if self.switch_guest.get_active():
-			self.printd("Adding guest user...")
-			#if GuestUser.add_guest_user()[0]:
-			if self.enable_guest():
-				self.state=True
+		if value!=self.isGuestUserEnabled:
+			self.isGuestUserEnabled=value
+			if self.isGuestUserEnabled!=LlxGuest.guestMan.isGuestUserEnabled:
+				self.settingsChanged=True
 			else:
-				self.state=False
-				self.switch_guest_error_state=True
+				self.settingsChanged=False
+					
+	#def manageChanges
+
+	@Slot()
+	def applyChanges(self):
+
+		self.showSettingsMessage=[False,"","Success"]
+		self.closePopUp=False
+		self.showChangesDialog=False
+		self.setChangesT=SetChanges(self.isGuestUserEnabled)
+		self.setChangesT.start()
+		self.setChangesT.finished.connect(self._applyChanges)
+
+	#def applyChanges	
+
+	def _applyChanges(self):
+
+		if not self.setChangesT.ret[0]:
+			self.showSettingsMessage=[True,self.setChangesT.ret[1],"Success"]
+			self.closeGui=True
 		else:
-			self.printd("Deleting guest user...")
-			#if GuestUser.delete_guest_user()[0]:
-			if self.disable_guest():
-				self.state=False
-			else:
-				self.state=True
-				self.switch_guest_error_state=True
-				
+			self.showSettingsMessage=[True,self.setChangesT.ret[1],"Error"]
+			self.closeGui=False
 
+		self.isGuestUserEnabled=LlxGuest.guestMan.isGuestUserEnabled
+		self.settingsChanged=False
+		self.closePopUp=True
 
-		#self.printd("Switch was turned %s"%self.state)
+	#def _applyChanges
 
-		#time.sleep(1)
+	@Slot()
+	def cancelChanges(self):
 
-	def show_reveal(self,*args):
-		th=args[-1]
-		if th.is_alive():
-			self.printd("working, please wait!!")
-			return True
+		self.showSettingsMessage=[False,"","Success"]
+		self.closePopUp=False
+		self.closeGui=False
+		self.showChangesDialog=False
+		self._cancelChanges()
 
-		self.printd("Thread FINISHED.")
+	#def cancelGroupChanges
+
+	def _cancelChanges(self):
+
+		self.isGuestUserEnabled=LlxGuest.guestMan.isGuestUserEnabled
+		self.settingsChanged=False
+		self.closePopUp=True
+		self.closeGui=True
+
+	#def _cancelGroupChanges
+
+	@Slot(str)
+	def manageSettingsDialog(self,action):
 		
-		self.switch_guest.set_sensitive(True)
-		self.close_button.set_sensitive(True)
-		self.spinner.hide()
-		
-		self.lock_quit=False
-		if self.switch_guest_error_state:
-			#self.msg_label.set_name("MSG_LABEL")
-			self.msg_label_box.set_name("ERROR_BOX")
-			self.msg_ok_img.hide()
-			self.msg_error_img.show()
-			#self.msg_label.set_name("INFO_LABEL")				
-			self.msg_label.set_text(_("There has been a problem creating guest user."))
-			self.msg_label.set_name("BOX_LABEL")
-			self.switch_guest.set_state(self.state)
-		else:
-			
-			if self.state:
-				#self.msg_label.set_name("MSG_LABEL")
-				self.msg_label.set_text(_("Guest user added."))
-			else:
-				#self.msg_label.set_name("MSG_LABEL")
-				self.msg_label.set_text(_("Guest user deleted."))
-			
-			self.msg_label_box.set_name("SUCCESS_BOX")
-			self.msg_ok_img.show()
-			self.msg_error_img.hide()
-			self.msg_label.set_name("BOX_LABEL")
+		if action=="Accept":
+			self.applyChanges()
+		elif action=="Discard":
+			self.cancelChanges()
+		elif action=="Cancel":
+			self.closeGui=False
+			self.showChangesDialog=False
 
-			self.switch_guest_error_state=False
-		self.msg_label.show()
+	#def manageSettingsDialog
 
-		return False
+	@Slot(int)
+	def manageTransitions(self,stack):
 
-	# ##################### ##########################################
+		if self.currentOptionsStack!=stack:
+			self.currentOptionsStack=stack
 
-
-
-	def get_guest_status(self):
-		
-		ret=os.system("llx-guest-manager status")
-		
-		if ret==0:
-			return True
-		
-		
-		return False
-		
-	#def get_guest_state
+	#def manageTransitions
 	
-	
-	def enable_guest(self):
+	@Slot()
+	def openHelp(self):
 		
-		ret=os.system("llx-guest-manager enable")
-		
-		if ret==0:
-			self.state=True
-			return True
-		else:
-			self.switch_guest_error_state=True
-			return False
-		
-	#def enable_guest
-	
-	
-	def disable_guest(self):
-		
-		ret=os.system("llx-guest-manager disable")
-		
-		if ret==0:
-			self.state=False
-			return True
-		else:
-			self.switch_guest_error_state=True
-			return False
-		
-	#def disable_user
-	
-	
-	def check_permissions(self):
+		runPkexec=False
 		
 		if "PKEXEC_UID" in os.environ:
-			self.user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
-		else:
-			self.user=os.environ["USER"]
-		
-		#old groups method
-		#groups = [g.gr_name for g in grp.getgrall() if self.user in g.gr_mem]
-		
-		gid = pwd.getpwnam(self.user).pw_gid
-		groups_gids = os.getgrouplist(self.user, gid)
-		groups = [ grp.getgrgid(x).gr_name for x in groups_gids ]
-		
+			runPkexec=True
 
-		if "sudo" not in groups and "admins" not in groups and "teachers" not in groups:
-			return False
+		if 'valencia' in LlxGuest.guestMan.sessionLang:
+			self.helpCmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Activa%20compte%20d%27usuari%20convidat%20en%20LliureX%2021'
 		else:
-			return True
+			self.helpCmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Activar+cuenta+de+usuario+invitado+en+LliureX+21'
 		
-	#def check_permissions
+		if not runPkexec:
+			self.helpCmd="su -c '%s' $USER"%self.helpCmd
+		else:
+			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
+			self.helpCmd="su -c '%s' %s"%(self.helpCmd,user)
 
+		self.openHelp_t=threading.Thread(target=self._openHelp)
+		self.openHelp_t.daemon=True
+		self.openHelp_t.start()
+
+	#def openHelp
+
+	def _openHelp(self):
+
+		os.system(self.helpCmd)
+
+	#def _openHelp
+
+	@Slot()
+	def closeApplication(self):
+
+		self.closeGui=False
+		if self.settingsChanged:
+			self.showChangesDialog=True
+		else:
+			self.closeGui=True
+
+	#def closeApplication
+	
+	on_currentStack=Signal()
+	currentStack=Property(int,_getCurrentStack,_setCurrentStack, notify=on_currentStack)
+	
+	on_currentOptionsStack=Signal()
+	currentOptionsStack=Property(int,_getCurrentOptionsStack,_setCurrentOptionsStack, notify=on_currentOptionsStack)
+
+	on_isGuestUserEnabled=Signal()
+	isGuestUserEnabled=Property(bool,_getIsGuestUserEnabled,_setIsGuestUserEnabled,notify=on_isGuestUserEnabled)
+	
+	on_settingsChanged=Signal()
+	settingsChanged=Property(bool,_getSettingsChanged,_setSettingsChanged, notify=on_settingsChanged)
+
+	on_showSettingsMessage=Signal()
+	showSettingsMessage=Property('QVariantList',_getShowSettingsMessage,_setShowSettingsMessage,notify=on_showSettingsMessage)
+
+	on_closePopUp=Signal()
+	closePopUp=Property(bool,_getClosePopUp,_setClosePopUp, notify=on_closePopUp)
+
+	on_closeGui=Signal()
+	closeGui=Property(bool,_getCloseGui,_setCloseGui, notify=on_closeGui)
+
+	on_showChangesDialog=Signal()
+	showChangesDialog=Property(bool,_getShowChangesDialog,_setShowChangesDialog, notify=on_showChangesDialog)
 
 #class LlxGuest
 
-
-
-if __name__=="__main__":
-	
-	pass

@@ -1,2 +1,2 @@
 # llx-guest
-Create guest user to kde
+Guest user for kde plasma session
