@@ -21,7 +21,10 @@ case $1 in
 			fi
 			
 		fi
-		
+		newVersion=$(dpkg-query --showformat='${Version}' --show llx-guest)
+        tokenDir=/var/lib/llx-guest/version
+
+        echo "$newVersion" > "$tokenDir" || true
 		
                 ;;
 	   abort-upgrade|abort-remove|abort-deconfigure)

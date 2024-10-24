@@ -8,7 +8,7 @@ Standards-Version: 3.9.5
 
 Package: llx-guest
 Architecture: all
-Depends: ${misc:Depends}, n4d-guestmanager (>=0.7), python3, lliurex-sddm-theme (>=1.10.0.0), debianutils
+Depends: ${misc:Depends}, n4d-guestmanager (>=0.7), python3, lliurex-sddm-theme (>=1.10.0.0), debianutils,pyside6-tools, python3-pyside6.qtqml, python3-pyside6.qtquick, python3-pyside6.qtgui, python3-pyside6.qtwidgets, python3-pyside6.qtquickwidgets
 Description: LliureX Guest
  Manage guest user account
 
