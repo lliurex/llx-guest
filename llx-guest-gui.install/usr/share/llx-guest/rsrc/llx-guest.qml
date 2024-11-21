@@ -70,6 +70,8 @@ ApplicationWindow {
             Layout.leftMargin:0
             Layout.fillWidth:true
             Layout.fillHeight: true
+	    Layout.minimumHeight:230
+            Layout.maximumHeight:230
             initialItem:loadingView
 
             onCurrentIndexChanged:{
