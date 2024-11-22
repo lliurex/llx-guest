@@ -33,6 +33,7 @@ if "sudo" not in groups and "admins" not in groups and "teachers" not in groups:
 
 import LlxGuest
 app = QApplication()
+app.setDesktopFileName("llx-guest")
 engine = QQmlApplicationEngine()
 engine.clearComponentCache()
 context=engine.rootContext()
@@ -46,7 +47,6 @@ if not engine.rootObjects():
 	sys.exit(-1)
 
 engine.quit.connect(QApplication.quit)
-app.setWindowIcon(QIcon("/usr/share/icons/hicolor/scalable/apps/llx-guest.svg"));
 ret=app.exec()
 del engine
 del app
