@@ -1,3 +1,9 @@
+llx-guest (0.53) noble; urgency=medium
+
+  * Add support for root user
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Mon, 02 Jun 2025 19:07:10 +0200
+
 llx-guest (0.52.3) noble; urgency=medium
 
   * Fixed to display centered on screeen
