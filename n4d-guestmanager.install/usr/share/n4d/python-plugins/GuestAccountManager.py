@@ -202,7 +202,7 @@ class GuestAccountManager:
 		
 		if not self.enabled:
 		
-			command="useradd -p %s -M -N -u %s -r -s /bin/bash -G cdrom,dip,plugdev,sambashare -d %s %s"%(GuestAccountManager.GUEST_PASSWORD,GuestAccountManager.GUEST_UID,GuestAccountManager.GUEST_HOME,GuestAccountManager.GUEST_USER)
+			command="useradd -p %s -M -N -u %s -r -s /bin/bash -G cdrom,dip,plugdev,sambashare,nopasswdlogin -d %s %s"%(GuestAccountManager.GUEST_PASSWORD,GuestAccountManager.GUEST_UID,GuestAccountManager.GUEST_HOME,GuestAccountManager.GUEST_USER)
 			p_return=self._run_command(command)
 			
 			if p_return["returncode"]==0:
