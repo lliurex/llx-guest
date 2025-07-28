@@ -1,3 +1,9 @@
+llx-guest (0.54) noble; urgency=medium
+
+  * User added to nopasswdlogin 
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 28 Jul 2025 13:48:15 +0200
+
 llx-guest (0.53) noble; urgency=medium
 
   * Add support for root user
