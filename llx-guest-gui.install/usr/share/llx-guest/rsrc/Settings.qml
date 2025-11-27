@@ -3,7 +3,6 @@ import org.kde.kirigami as Kirigami
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Dialogs
 import org.kde.plasma.components as PC
 
 Rectangle{
@@ -102,7 +101,6 @@ Rectangle{
 
     ChangesDialog{
         id:cdcChangesDialog
-        dialogTitle:"Llx Guest"+" - "+i18nd("llx-guest-gui","Settings")
         dialogVisible:llxGuestBridge.showChangesDialog
         dialogMsg:i18nd("llx-guest-gui","The are pending changes to apply.\nDo you want apply the changes or discard them?")
 

@@ -1,39 +1,26 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Dialogs
 import org.kde.plasma.components as PC
 
 
-Dialog {
+Popup {
     id: customDialog
-    property alias dialogTitle:customDialog.title
     property alias dialogVisible:customDialog.visible
     property alias dialogMsg:dialogText.text
     signal dialogApplyClicked
     signal discardDialogClicked
     signal cancelDialogClicked
-    property bool xButton
 
     visible:dialogVisible
-    title:dialogTitle
     modal:true
     anchors.centerIn: Overlay.overlay
+    closePolicy:Popup.NoAutoClose
     background:Rectangle{
         color:"#ebeced"
         border.color:"#b8b9ba"
         border.width:1
-	radius:5.0
-    }
-
-    onVisibleChanged:{
-        if (!this.visible && xButton){
-            if (llxGuestBridge.showChangesDialog){
-                cancelDialogClicked()
-            }
-        }else{
-            xButton=true
-        }
+        radius:5.0
     }
 
     contentItem: Rectangle {
@@ -72,11 +59,9 @@ Dialog {
             anchors.right:dialogDiscardBtn.left
             anchors.rightMargin:10
             anchors.bottomMargin:5
-            DialogButtonBox.buttonRole: DialogButtonBox.ApplyRole
             Keys.onReturnPressed: dialogApplyBtn.clicked()
             Keys.onEnterPressed: dialogApplyBtn.clicked()
             onClicked:{
-                xButton=false
                 dialogApplyClicked()
                 llxGuestBridge.manageSettingsDialog("Accept")
             }
@@ -94,11 +79,9 @@ Dialog {
             anchors.right:dialogCancelBtn.left
             anchors.rightMargin:10
             anchors.bottomMargin:5
-            DialogButtonBox.buttonRole: DialogButtonBox.DestructiveRole
             Keys.onReturnPressed: dialogDiscardBtn.clicked()
             Keys.onEnterPressed: dialogDiscardBtn.clicked()
             onClicked:{
-                xButton=false
                 discardDialogClicked(),
                 llxGuestBridge.manageSettingsDialog("Discard")
             }
@@ -116,11 +99,9 @@ Dialog {
             anchors.right:parent.right
             anchors.rightMargin:5
             anchors.bottomMargin:5
-            DialogButtonBox.buttonRole:DialogButtonBox.RejectRole
             Keys.onReturnPressed: dialogCancelBtn.clicked()
             Keys.onEnterPressed: dialogCancelBtn.clicked()
             onClicked:{
-                xButton:false
                 cancelDialogClicked()
             }
         }
