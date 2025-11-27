@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-24 12:54+0200\n"
-"PO-Revision-Date: 2024-10-24 12:55+0200\n"
+"POT-Creation-Date: 2025-11-27 12:39+0100\n"
+"PO-Revision-Date: 2025-11-27 12:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -22,7 +22,6 @@ msgid "You need administration privileges to run this application."
 msgstr "Necesita permisos de administración para ejecutar esta aplicación."
 
 #: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ApplicationOptions.qml:25
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:105
 msgid "Settings"
 msgstr "Configuración"
 
@@ -30,25 +29,25 @@ msgstr "Configuración"
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:12
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:11
 msgid "Guest User"
 msgstr "Usuario Invitado"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:44
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:43
 msgid "Enable a guest user account in SDDM (Login Display Manager)"
 msgstr "Habilita una cuenta de invitado en SDDM (Gestor de entrada)"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:73
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ChangesDialog.qml:67
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:72
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ChangesDialog.qml:54
 msgid "Apply"
 msgstr "Aplicar"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:90
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ChangesDialog.qml:111
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:89
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ChangesDialog.qml:94
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:107
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:105
 msgid ""
 "The are pending changes to apply.\n"
 "Do you want apply the changes or discard them?"
@@ -56,35 +55,35 @@ msgstr ""
 "Hay cambios pendientes de aplicar,\n"
 "¿Desea aplicar los cambios o descartarlos?"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:157
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:155
 msgid "Guest user added sucessfully"
 msgstr "Usuario invitado añadido corectamente"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:160
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:158
 msgid "Guest user deleted sucessfully"
 msgstr "Usuario invitado borrado correctamente"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:163
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:161
 msgid "Guest user already enabled"
 msgstr "Usuario invitado ya esta activado"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:166
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:164
 msgid "Guest user already disabled"
 msgstr "Usuario invitado ya esta desactivado"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:169
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:167
 msgid "There has been a problem creating guest user"
 msgstr "Ha habido un problema creando el usuario invitado"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:172
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:170
 msgid "There has been a problem deleting guest use"
 msgstr "Ha habido un problema borrando el usuario invitado"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:196
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:194
 msgid "Please wait until the process is finished"
 msgstr "Por favor espere hasta que el proceso termine"
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:208
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/Settings.qml:206
 msgid "Restoring previous values. Wait a moment..."
 msgstr "Restaurando valores previos. Espere un momento..."
 
@@ -92,6 +91,6 @@ msgstr "Restaurando valores previos. Espere un momento..."
 msgid "Loading. Wait a moment..."
 msgstr "Cargando. Espere un momento..."
 
-#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ChangesDialog.qml:89
+#: ../llx-guest-gui.install/usr/share/llx-guest/rsrc/ChangesDialog.qml:74
 msgid "Discard"
 msgstr "Descartar"
