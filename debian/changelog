@@ -1,3 +1,9 @@
+llx-guest (0.55.1) noble; urgency=medium
+
+  * Disabled kwallet
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 10 Jun 2026 10:10:56 +0200
+
 llx-guest (0.55) noble; urgency=medium
 
   * Fixed custom dialog template
