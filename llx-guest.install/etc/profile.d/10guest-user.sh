@@ -1,3 +1,4 @@
+#!/bin/sh
 # GUEST ONLY LOGIC
 
 if [ "$UID" = "59999" ]; then
@@ -11,6 +12,8 @@ if [ "$UID" = "59999" ]; then
 	fi
 
 	run-parts /usr/share/llx-guest/postactions || true
+
+	printf "[Wallet]\nEnabled=false\nFirst Wizard=false\n" > "$HOME/.config/kwalletrc" || true
 
 fi
 
