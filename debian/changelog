@@ -1,3 +1,9 @@
+llx-guest (0.42.1) jammy; urgency=medium
+
+  * Changed to disable kwallet
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 10 Jun 2026 09:55:43 +0200
+
 llx-guest (0.42) jammy; urgency=medium
 
   * Add support for root user into cli 
