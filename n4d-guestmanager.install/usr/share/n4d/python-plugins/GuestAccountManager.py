@@ -216,8 +216,9 @@ class GuestAccountManager:
 			else:
 				ret["status"]=False
 				ret["msg"]=p_return["stderr"]
-				
-			return ret
+
+			return n4d.responses.build_successful_call_response(ret)
+
 			
 		ret["status"]=False
 		ret["msg"]="%s already enabled"%GuestAccountManager.GUEST_USER
@@ -245,8 +246,8 @@ class GuestAccountManager:
 			else:
 				ret["status"]=False
 				ret["msg"]=p_return["stderr"]
-				
-			return ret
+
+			return n4d.responses.build_successful_call_response(ret)
 			
 		ret["status"]=False
 		ret["msg"]="%s is not enabled"%GuestAccountManager.GUEST_USER
