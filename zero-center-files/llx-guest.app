@@ -12,3 +12,4 @@ Groups=sudo;admins;teachers
 Category=Configuration
 ScriptPath=llx-guest.zmd
 Using=pkexec
+ReplacedWith=lliurex-login-control
