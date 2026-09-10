@@ -1,3 +1,10 @@
+llx-guest (0.55.2) noble; urgency=medium
+
+  * Changed some n4d responses
+  * Changed zomando to hide it if lliurex-login-control is installed
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 10 Sep 2026 10:58:08 +0200
+
 llx-guest (0.55.1) noble; urgency=medium
 
   * Disabled kwallet
